@@ -15,11 +15,11 @@ To clarify, roles can associate multiple `Identity Actor Models` using mathemati
 
 ### 1.1 Clarification on Assumptions
 
-`ZTAuth*`assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
+`ZTAuth*` assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
 
-`ZTAuth*`focuses solely on managing the metadata of identities provided by the IdP and implements the entire Authorization (AuthZ) layer.
+`ZTAuth*` primarily focuses on **Zero Trust** security, managing the metadata of identities provided by the IdP and implementing the entire Authorization (AuthZ) layer.
 
-This approach ensures that `ZTAuth*`remains streamlined and dedicated to authorization, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
+This approach ensures that `ZTAuth*` remains streamlined and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
 
 ### 1.2 Zero Trust Architecture (ZTApp or ZTApplication)
 
@@ -187,4 +187,7 @@ Authored by:
 
 - Nicola Gallo, acting solely as the primary creator and ideator on behalf of Nitro Agility Srl.
 
-> All contributors to this document, including its current and future authors, act strictly as representatives of Nitro Agility Srl. Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work. Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. All such matters shall be addressed exclusively to Nitro Agility Srl.
+> All contributors to this document, including its current and future authors, act strictly as representatives of Nitro Agility Srl.
+> Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work.
+> Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. 
+> All such matters shall be addressed exclusively to Nitro Agility Srl.
