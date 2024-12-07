@@ -13,13 +13,21 @@ Under this framework, the Identity Provider (IDP) can create roles associated wi
 
 To clarify, roles can associate multiple `Identity Actor Models` using mathematical operations such as Union, Intersection, and Difference. This enables precise and flexible permission assignments, ensuring that every role operates within a clearly defined, auditable, and secure authorization context.
 
-### 1.1 Zero Trust Architecture (ZTApp or ZTApplication)
+### 1.1 Premise
 
-Here the ZTAuth* Architecture.
+`ZTAuth*`assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
 
-![ZTAuth* Architecture](ztauth-architecture.png "Zero Trust Auth* Architecture")
+`ZTAuth*`focuses solely on managing the metadata of identities provided by the IdP and implements the entire Authorization (AuthZ) layer.
 
-### 1.1 Fields of Application
+This approach ensures that `ZTAuth*`remains streamlined and dedicated to authorization, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
+
+### 1.2 Zero Trust Architecture (ZTApp or ZTApplication)
+
+Here the `ZTAuth*`Architecture.
+
+![`ZTAuth*`Architecture](ztauth-architecture.png "Zero Trust Auth* Architecture")
+
+### 1.3 Fields of Application
 
  The `Identity Actor Model` is designed for diverse applications across multiple domains, including but not limited to:
 
@@ -117,7 +125,7 @@ Here is the list of terms used in this document:
 - **`Principal`**: A specific `Identity` actively engaged in an authenticated session or action within the system. A `Principal` represents the operational context of an `Identity` during its interaction with the system, including its roles, permissions, and any assumed responsibilities.
 - **`node`**: A hardware or software component in the system architecture. It receives requests from a principal and performs actions within an authorization context on behalf of that principal.
 - **`Central Server`**: A `Central Server` is a server that implements the Zero Trust Application (`ZTApplication`) as defined by the `ZTAuth*` Architecture.
-- **`Actor`**: A type of `virtual identity` that a principal can temporarily assume.
+- **`Actor`**: A type of `delegated identity` that a principal can temporarily assume.
 - **`Role-Based Actor`**: A representation of a predefined role with specific permissions for a particular task or function.
 - **`Digital Twin Actor`**: A virtual representation of an identity that operates independently. It mirrors the behavior and responsibilities of its associated identity, enabling autonomous operations such as scheduled tasks or API interactions.
 - **`Zero Trust Elevation (ZT Elevation)`**: The process of dynamically establishing a secure, isolated authorization context for a specific principal. This process leverages the authorization model of the target actor to create a temporary sandbox. The sandbox enforces strict security boundaries, allowing the principal to execute only a predefined set of actions required for a specific task or operation. This ensures adherence to the principle of least privilege, minimizing risk and providing full auditability during execution.
@@ -127,13 +135,13 @@ Here is the list of terms used in this document:
 
 ### Appendix B.1. Actor Model Definition
 
-An `Actor` is a type of `virtual identity` that can be `temporarily assumed` by a `Principal` (e.g., a user or an entity represented by an Identity Provider - IdP). `Actors` are designed to `encapsulate specific` and `isolated contexts`, allowing `limited` and `purpose-driven permissions` for particular tasks. They can be configured for the following scenarios:
+An `Actor` is a type of `delegated identity` that can be `temporarily assumed` by a `Principal` (e.g., a user or an entity represented by an Identity Provider - IdP). `Actors` are designed to `encapsulate specific` and `isolated contexts`, allowing `limited` and `purpose-driven permissions` for particular tasks. They can be configured for the following scenarios:
 
 - **Role-Based Actor**: represents a predefined role with specific permissions for a given task or function, such as `Approvals Manager` or `Compliance Reviewer.`
 
     >Example: A Principal with the `Finance Specialist` role temporarily elevates their permissions to `Approvals Manager` to approve budget requests without gaining broader permissions.
 
-- **Digital Twin Actor**: a virtual representation of a Principal or Service Account that operates independently. A Digital Twin can assume its own virtual identity to perform specific tasks, such as scheduled processes or API operations, reflecting the capabilities of the original Principal.
+- **Digital Twin Actor**: a virtual representation of a Principal or Service Account that operates independently. A Digital Twin can assume its own delegated identity to perform specific tasks, such as scheduled processes or API operations, reflecting the capabilities of the original Principal.
     > Example: An application uses a Digital Twin configured by the IdP to represent an `Agent` performing periodic compliance checks across multiple tenants.
 
 Key Features and Benefits of the Actor Model:
