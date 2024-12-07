@@ -11,9 +11,7 @@ This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 
 
 ---
 
-All contributors to this document, including its current and future authors, act strictly as representatives of Nitro Agility Srl.
-
-Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work. Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. All such matters shall be addressed exclusively to Nitro Agility Srl.
+> All contributors to this document, including its current and future authors, act strictly as representatives of Nitro Agility Srl. Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work. Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. All such matters shall be addressed exclusively to Nitro Agility Srl.
 
 ---
 
