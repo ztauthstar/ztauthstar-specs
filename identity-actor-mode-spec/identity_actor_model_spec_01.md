@@ -23,7 +23,7 @@ This approach ensures that `ZTAuth*`remains streamlined and dedicated to authori
 
 ### 1.2 Zero Trust Architecture (ZTApp or ZTApplication)
 
-Here the `ZTAuth*`Architecture.
+The `ZTAuth*` Architecture is outlined here. For further details, please refer to other specifications, if available, or consult the publications in the [ztauthstar-publications](https://github.com/ztauthstar/ztauthstar-publications) repository.
 
 ![`ZTAuth*`Architecture](ztauth-architecture.png "Zero Trust Auth* Architecture")
 
@@ -188,5 +188,5 @@ Authored by:
 - Nicola Gallo, acting solely as the primary creator and ideator on behalf of Nitro Agility Srl.
 
 All contributors to this document, including its current and future authors, act strictly as representatives of Nitro Agility Srl.
-Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work.  
-Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. All such matters shall be addressed exclusively to Nitro Agility Srl.
+
+Nitro Agility Srl retains full ownership, responsibility, and liability for the content, actions, and implications arising from this work. Under no circumstances shall listed authors or any other contributors, past, present, or future, be held personally liable for any disputes, claims, or liabilities related to this document or its usage. All such matters shall be addressed exclusively to Nitro Agility Srl.
