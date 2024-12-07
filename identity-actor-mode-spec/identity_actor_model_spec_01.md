@@ -13,7 +13,7 @@ Under this framework, the Identity Provider (IDP) can create roles associated wi
 
 To clarify, roles can associate multiple `Identity Actor Models` using mathematical operations such as Union, Intersection, and Difference. This enables precise and flexible permission assignments, ensuring that every role operates within a clearly defined, auditable, and secure authorization context.
 
-### 1.1 Premise
+### 1.1 Clarification on Assumptions
 
 `ZTAuth*`assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
 
