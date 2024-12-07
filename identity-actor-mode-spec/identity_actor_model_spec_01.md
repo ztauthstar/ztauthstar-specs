@@ -5,7 +5,7 @@
 This specification defines the `Identity Actor Model` as a foundational concept within the Zero Trust Auth* (`ZTAuth*`) Framework.
 The `ZTAuth*` Framework strictly adheres to and implements the principles of the `ZTAuth*` Architecture.
 
-The goal of this specification is to provide the architecture and implementation details necessary for a `node` to securely act as an `Actor` on behalf of a `Principal`. This ensures secure and controlled operations, fully aligned with the principle of least privilege.
+The goal of this specification is to provide the architecture and implementation details necessary for a `node` to securely act as an `Actor` on behalf of a `Principal`. This ensures secure and controlled operations, fully aligned with the Zero Trust principles.
 
 The `Identity Actor Model` is a transformative concept, offering clear guidance for implementing secure operations and inherently directing system architecture to build correct authorization models. These models are designed with Zero Trust Security as the foundational principle, ensuring that permissions and actions are always limited to what is strictly necessary.
 
