@@ -1,6 +1,6 @@
 # Identity Actor Model Specification
 
-## 1. Introduction
+## 1. Scope and Framework
 
 This specification introduces the `Identity Actor Model`, a core component of the Zero Trust Auth* (`ZTAuth*`) Framework.
 It implements the `ZTAuth*` Architecture to provide a secure, scalable, and organized way to manage authorization, aligning with Zero Trust principles.
@@ -8,12 +8,12 @@ It implements the `ZTAuth*` Architecture to provide a secure, scalable, and orga
 The `Identity Actor Model`, also known as the `Actor Model` or simply `Actor`, enables secure, permission-based operations through policies.
 It links policies directly to specific authorization contexts, ensuring systems operate with only the minimum permissions required for efficiency and security.
 
-### 1.1 Purpose
+### 1.1 Purpose and Scope
 
 The purpose of this specification is to outline how a `Node` can securely act as an `Actor` on behalf of a `Principal`.
 It provides clear guidance for both architecture and implementation to enable permissioned operations that fully align with Zero Trust principles, ensuring secure interactions with strictly bounded permissions.
 
-### 1.2 Key Features
+### 1.2 Key Functional Characteristics
 
 The `Identity Actor Model` enhances user, role and group management with:
 
@@ -23,7 +23,7 @@ The `Identity Actor Model` enhances user, role and group management with:
 
 These features make the `Identity Actor Model` a secure, efficient, scalable, and flexible solution for modern systems.
 
-### 1.3 Clarification on Assumptions
+### 1.3 Underlying Assumptions and Preconditions
 
 `ZTAuth*` assumes that Identity Providers (IdPs) are now the standard and are responsible for managing core identity aspects, such as Users, Roles, and Groups, specifically in the context of Authentication (AuthN) and Identity Management.
 
@@ -31,13 +31,13 @@ These features make the `Identity Actor Model` a secure, efficient, scalable, an
 
 This approach ensures that `ZTAuth*` remains focused and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
 
-### 1.4 Zero Trust Architecture (ZTApp or ZTApplication)
+### 1.4 Integration with Zero Trust Architecture
 
 The `ZTAuth*` Architecture is outlined in this diagram `https://github.com/ztauthstar/ztauthstar-specs/blob/main/identity-actor-mode-spec/01/ztauth-architecture.png`.
 
 For further details, refer to `https://github.com/ztauthstar/ztauthstar-publications`.
 
-### 1.5 Fields of Application
+### 1.5 Applicable Use Domains
 
 The `Identity Actor Model` is versatile and applies to a wide range of domains, including, but not limited to:
 
@@ -107,7 +107,7 @@ Important Notes:
 - **`Node` Chaining**: `Nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
    For example, a possible chain could be: `API -> Worker -> API -> API -> Worker -> Robot -> API -> Worker -> API`.
 
-### 1.6 Reference Scenario
+### 1.6 Reference Implementation Scenario
 
 To explain the concepts in this document, consider an **accounting system** with two business roles:
 
