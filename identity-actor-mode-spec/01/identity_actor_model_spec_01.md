@@ -339,7 +339,41 @@ The `bob-actor` `actor`:
 
 ### 2.4 Elevating to the Actor Model
 
--- to be defined --
+Elevating to an `Actor Model` enables a `Node` to act on behalf of the `Principal` within a secure, bounded `Authorization Context`. This process ensures that all operations are performed according to the policies associated with the `Actor Model`.
+
+Steps to Elevate to the `Actor Model`:
+
+1. **Checking Assignment**:
+   The first step is to verify if the `Principal` is assigned to the `Actor Model`. This includes validating that the `Principal` meets the criteria defined in the `assumed_by` field of the `Actor Model`. The criteria for `assumed_by` are detailed in the Trusted Elevation section, and only entities satisfying these conditions can proceed with the elevation.
+
+2. **Loading Policies**:
+   Once the assignment is confirmed, the `Node` loads the policies associated with the `Actor Model`. These policies define the specific actions that can be performed under the `Actor Model`.
+
+3. **Creating the Authorization Context**:
+   Using the loaded policies, the `Node` constructs an `Authorization Context` tailored to the current `Principal`. This context ensures that operations are scoped to the permissions defined in the `Actor Model`.
+
+4. **Authorization Check**:
+   The final step is to verify whether the `Principal` is authorized to execute the requested action within the `Authorization Context`. This ensures strict compliance with the defined policies.
+
+Differences Between Role-Based and Digital Twin Actors:
+
+- **Role-Based Actor**:
+  A `Role-Based Actor` represents a predefined role with a limited, task-specific set of permissions. It adheres to the principle of least privilege by loading only the permissions required for the task at hand.
+  - **Example**: An `accountant-viewer-actor` allows viewing invoices but does not grant permissions to modify or approve them.
+
+- **Digital Twin Actor**:
+  A `Digital Twin Actor` replicates all permissions of the specific `Principal`. While this can be necessary for scenarios requiring full mirroring of the `Principal`, it may lead to excessive permissions being granted, potentially violating the principle of least privilege.
+  - **Example**: A `john-actor` mirrors John’s identity, granting him permissions to view, create, update, delete, approve, and reject invoices.
+
+Key considerations:
+
+- **Security**:
+  Elevating to a `Role-Based Actor` minimizes security risks by restricting permissions to those required for the specific task. Elevating to a `Digital Twin Actor`, on the other hand, may expose the system to greater risks by unnecessarily loading excessive permissions.
+
+- **Best Practices**:
+Use `Role-Based Actors` whenever possible to enforce minimal privilege. Reserve `Digital Twin Actors` for scenarios where full mirroring of the `Principal` is explicitly required.
+
+By following these steps and adhering to these guidelines, the elevation process ensures secure, task-specific operations within clearly defined boundaries, aligning with the Zero Trust principles of the `ZTAuth*` framework.
 
 ## 3. Pairing of the `Central Server` and `Nodes`
 
