@@ -221,6 +221,23 @@ The `bob-actor` is a `Digital Twin Actor` representing a delegated identity that
 }
 ```
 
+Below is the structure of the `Actor Model` JSON, with explanations for each field and possible values:
+
+- **`actor_model_id`**: A unique identifier for the `Actor Model`.
+
+- **`actor_model_type`**: Specifies the type of `Actor Model`. Possible values are `role-based-actor` or `digital-twin-actor`.
+
+- **`actor_model_name`**: A descriptive name for the `Actor Model` (e.g., `accountant-viewer-actor`).
+
+- **`actor_identity`**: The identity associated with the `Actor Model`.
+  - For `Role-Based Actors`: Can be a wildcard (`*`), meaning any identity can assume this role if it has the required trust or permissions.
+  - For `Digital Twin Actors`: Refers to the specific identity mirrored by the `Actor` (e.g., an exact identity ID).
+
+- **`assumed_by`**: Defines who can assume the `Actor Model`. This will be further discussed in the Trusted Elevation section. Possible values are:
+  - **`itself`**: Only the identity associated with the current request (the Principal itself) can assume this `Actor` on behalf of the `Principal`.
+  - **`trusted`**: Any entity with general trust can assume the identity.
+  - **`strictly-trusted`**: Only entities with specific trust for this identity can assume it.
+
 The `ZTAuth*` framework supports both `Role-Based Actors` and `Digital Twin Actors`. However, best practice recommends prioritizing the use of `Role-Based Actors` because they are more flexible and applicable to a wider range of scenarios.
 
 Adding `Digital Twin Actors` should only be done when strictly necessary, as they create an `Authorization Context` that mirrors the original `Principal`. This can result in granting more permissions than needed, weakening the principle of least privilege.
