@@ -111,10 +111,10 @@ Important Notes:
 
 To explain the concepts in this document, consider an **accounting system** with two business roles:
 
-- **John**: An accountant who manages all parts of the invoice process (view, create, update, delete, approve, reject).
-- **Bob**: An apprentice who can only view invoices and cannot perform other actions.
+- **John**: An `accountant` who manages all parts of the invoice process (view, create, update, delete, approve, reject).
+- **Bob**: An `apprentice` who can only view invoices and cannot perform other actions.
 
-As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to **create new invoices**, but these invoices must remain pending until approved by another accountant.
+As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to either **create or update new invoices**, but these invoices must remain pending until approved by another accountant.
 
 This example demonstrates how responsibilities can be shared in a bounded way, with clear limits to ensure accountability and security.
 
