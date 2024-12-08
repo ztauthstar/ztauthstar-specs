@@ -10,16 +10,16 @@ It links policies directly to specific authorization contexts, ensuring systems 
 
 ### 1.1 Purpose
 
-The purpose of this specification is to outline how a `node` can securely act as an `Actor` on behalf of a `Principal`.
-It provides clear guidance for both architecture and implementation to enable permissioned operations that fully align with Zero Trust principles, ensuring secure and controlled interactions.
+The purpose of this specification is to outline how a `Node` can securely act as an `Actor` on behalf of a `Principal`.
+It provides clear guidance for both architecture and implementation to enable permissioned operations that fully align with Zero Trust principles, ensuring secure interactions with strictly bounded permissions.
 
 ### 1.2 Key Features
 
 The `Identity Actor Model` enhances user, role and group management with:
 
-- **Direct Link Between Identities and `Actor Models`:** Users, roles and groups are mapped directly to `Actor Models`, ensuring clear alignment with system roles and requirements.
+- **Direct Link Between Identities and `Actor Models`:** Users, roles and groups are mapped directly to `Actor Models`.
 
-- **Flexible Authorization Options:** Combine `Actor Models` using Union, Intersection, and Difference to support complex permission scenarios.
+- **Customizable `Actor Models`:** Combine `Actor Models` using Union, Intersection, and Difference to support complex permission scenarios.
 
 These features make the `Identity Actor Model` a secure, efficient, and scalable solution for modern systems.
 
