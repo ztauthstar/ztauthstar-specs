@@ -57,7 +57,8 @@ The `Identity Actor Model` is versatile and applies to a wide range of domains, 
 
 We can summarize as following:
 
-    The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `Node` is responsible for managing requests from a `Principal`. The `Node` securely processes these requests within a clearly defined authorization context, acting as an `Actor` and performing actions strictly on behalf of the `Principal` while enforcing necessary security and operational boundaries.
+    The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `Node` is responsible for managing requests from a `Principal`.
+    The `Node` securely processes these requests within a clearly defined authorization context, acting as an `Actor` and performing actions strictly on behalf of the `Principal` while enforcing necessary security and operational boundaries.
 
 Below are two illustrative examples to help understand the concept. These are purely figurative and not exhaustive, meant only to provide practical context:
 
