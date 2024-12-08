@@ -115,13 +115,6 @@ According to the `ZTAuth*` Architecture, the `Actor Model` is strictly linked to
 
 ### 2.1 Definition of Policies
 
-As per ZTAuth* architecture the policies has to be defined in terms of resoruces and actions, however this is not stricly required as also other notation can be used.
-The improtant part is to make sure a `Policy Ledger` is used to store the policies in order to guaratnee a Zero Trust approach that include immutabile and versioanble policies.
-
-Below an exampl of policy we would define fro the implementation scenario, a sample domain specificy language is used but policies can be used with any policy langauge.
-
-### 2.2 Definition of Actor Models
-
 According to the `ZTAuth*` Architecture, policies should ideally be defined in terms of resources and actions. However, this is not strictly required, as other notations can also be used.
 The critical aspect is ensuring that a `Policy Ledger` is utilized to store the policies, guaranteeing a Zero Trust approach with immutable and versionable policies.
 
@@ -135,6 +128,10 @@ Below is an example of a policy defined for the implementation scenario. A sampl
 | 4         | view-invoice    | PERMIT view ON invoice    |
 | 5         | approve-invoice | PERMIT approve ON invoice |
 | 6         | reject-invoice  | PERMIT reject ON invoice  |
+
+### 2.2 Definition of Actor Models
+
+-- to be defined --
 
 ### 2.3 Definition of Authorization Models
 
