@@ -257,6 +257,86 @@ The `Authorization Model` maps policies to the corresponding `Actor Models`. Bel
 | 5              | digital-twin-actor | john-actor                 | view-invoice, create-invoice, update-invoice, delete-invoice, approve-invoice, reject-invoice |
 | 6              | digital-twin-actor | bob-actor                  | view-invoice                                                                                  |
 
+This can be implemented by adding a `policies` field to the `Actor Model`. Below are the updated `Actor Models` reflecting this change.
+
+The `accountant-viewer-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 1,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-viewer-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
+    "policies": ["view-invoice"]
+}
+```
+
+The `accountant-authoring-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 2,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-authoring-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["create-invoice", "update-invoice", "delete-invoice"]
+}
+```
+
+The `accountant-approver-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 3,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-approver-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["approve-invoice", "reject-invoice"]
+}
+```
+
+The `apprentice-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 4,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "apprentice-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["view-invoice"]
+}
+```
+
+The `john-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 5,
+    "actor_model_type": "digital-twin-actor",
+    "actor_model_name": "john-actor",
+    "actor_identity": "john",
+    "assumed_by": ["itself", "strictly-trusted"],
+    "policies": ["view-invoice", "create-invoice", "update-invoice", "delete-invoice", "approve-invoice", "reject-invoice"]
+}
+```
+
+The `bob-actor` `actor`:
+
+```json
+{
+    "actor_model_id": 6,
+    "actor_model_type": "digital-twin-actor",
+    "actor_model_name": "bob-actor",
+    "actor_identity": "bob",
+    "assumed_by": ["itself", "strictly-trusted"],
+    "policies": ["view-invoice"]
+}
+```
+
 ### 2.4 Elevating to the Actor Model
 
 -- to be defined --
