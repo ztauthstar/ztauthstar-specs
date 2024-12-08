@@ -35,7 +35,7 @@ This approach ensures that `ZTAuth*` remains streamlined and dedicated to author
 
 ### 1.4 Zero Trust Architecture (ZTApp or ZTApplication)
 
-The `ZTAuth*` Architecture is outlined in this diagram `https://github.com/ztauthstar/ztauthstar-specs/blob/main/identity-actor-mode-spec/ztauth-architecture.png`.
+The `ZTAuth*` Architecture is outlined in this diagram `https://github.com/ztauthstar/ztauthstar-specs/blob/main/identity-actor-mode-spec/01/ztauth-architecture.png`.
 
 For further details, refer to `https://github.com/ztauthstar/ztauthstar-publications`.
 
