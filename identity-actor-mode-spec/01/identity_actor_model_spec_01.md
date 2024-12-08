@@ -93,6 +93,22 @@ This example demonstrates how responsibilities can be shared in a bounded way, w
 
 ![Implementation Scenario](./images/ztauth-actor-model-sample.png)
 
+The diagram illustrates the `Identity Actor Model` in action, where an application processes a request using an `API Node` and a `Worker Node`, both acting as `Actors` on behalf of a `Principal`.
+
+1. **API Node**:
+   - The `API Node` elevates its authorization context to that of the `Actor` and performs the operation within strict security boundaries.
+   - It signs the message and publishes it to the message broker (e.g., Kafka).
+
+2. **Worker Node**:
+   - The `Worker Node` retrieves the message from the broker, elevates its authorization context to that of the same `Actor`, and validates the message.
+   - It then performs the requested action securely on behalf of the `Principal`.
+
+All requests processed by the `API Node` and `Worker Node` use the same infrastructure authentication. The combination of signing and validation, along with bounded permissions defined by the `Actor` model, ensures the security and integrity of operations.
+
+It is important to note that the `Principal` and both `Nodes` are authenticated via the Identity Provider (IdP). The difference is that the `Principal` in this example is a human user, while the `Nodes` authenticate using machine service accounts. Both the `API Node` and `Worker Node` elevate to the same `Actor`, thereby sharing the same authorization context.
+
+This ensures that the distributed nature of the asynchronous operation remains secure and bounded. At both ends, the operations run within the same authorization context, as if the entire process were handled by a single node.
+
 ## 2. Pairing of the `Central Server` and `Nodes`
 
 The `Identity Actor Model` requires a secure and reliable mechanism for `nodes` to pair with the `Central Server`. This process is essential for the `Central Server` to manage the `nodes` and ensure secure communication between them.
