@@ -101,13 +101,11 @@ Below are two illustrative examples to help understand the concept. These are pu
 
 Important Notes:
 
-1. **Authentication Agnosticism**:  
-   The principal is recognized by the system using an `Authentication Token` or any other industry-standard authentication mechanism. This approach ensures the system is agnostic to specific authentication implementations, providing flexibility and compatibility across various standards.
+- **Authentication Agnosticism**: The principal can be recognized by the system using an `Authentication Token` or any other industry-standard authentication mechanism. 
+  This approach ensures the system is agnostic to specific authentication implementations, providing flexibility and compatibility across various standards.
 
-2. **`Node` Chaining**:  
-   `nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
-   For example, a possible chain could be:  
-   `API -> Worker -> API -> API -> Worker -> Robot -> API -> Worker -> API`.
+- **`Node` Chaining**: `Nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
+   For example, a possible chain could be: `API -> Worker -> API -> API -> Worker -> Robot -> API -> Worker -> API`.
 
 ### 1.6 Reference Scenario
 
@@ -116,9 +114,9 @@ To explain the concepts in this document, consider an **accounting system** with
 - **John**: An accountant who manages all parts of the invoice process (view, create, update, delete, approve, reject).
 - **Bob**: An apprentice who can only view invoices and cannot perform other actions.
 
-As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to **create new invoices**, but these invoices must stay pending until approved by another accountant.
+As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to **create new invoices**, but these invoices must remain pending until approved by another accountant.
 
-This example shows how responsibilities can be shared in a controlled way, with clear limits to ensure accountability and security.
+This example demonstrates how responsibilities can be shared in a bounded way, with clear limits to ensure accountability and security.
 
 ## 2. Pairing of the `Central Server` and `Nodes`
 
