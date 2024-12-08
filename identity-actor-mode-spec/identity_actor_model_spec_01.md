@@ -1,20 +1,31 @@
 # Identity Actor Model Specification
 
-## 1 Introduction
+## 1. Introduction
 
-This specification defines the `Identity Actor Model` as a core concept within the Zero Trust Auth* (`ZTAuth*`) Framework. The `ZTAuth*` Framework strictly adheres to and implements the `ZTAuth*` Architecture.
+This specification introduces the `Identity Actor Model`, a key part of the Zero Trust Auth* (`ZTAuth*`) Framework.
+It provides a secure and organized way to manage authorization, following the principles of Zero Trust.
 
-Throughout the rest of this document, the `Identity Actor Model` may also be referred to as `Actor Model` or simply `Actor`.
+The `Identity Actor Model`, also called the `Actor Model` or simply `Actor`, allows for secure operations based on permissions.
+It connects permissions directly to specific authorization scenarios, ensuring systems only use the minimum permissions needed to work efficiently and securely.
 
-The goal of this specification is to provide both architectural and implementation details necessary for a `node` to securely act as an `Actor` on behalf of a `Principal`, ensuring secure and controlled operations fully aligned with Zero Trust principles.
+### 1.1 Purpose
 
-The `Identity Actor Model` is a new concept that offers clear guidelines for implementing secure, permission-based operations. It provides a structured approach to designing system architectures with robust authorization models, ensuring that permissions and actions are always limited to what is strictly necessary. This helps software developers create secure and efficient systems.
+The purpose of this specification is to outline how a `node` can securely act as an `Actor` on behalf of a `Principal`.
+It provides clear guidance for both architecture and implementation to enable permissioned operations that fully align with Zero Trust principles, ensuring secure and controlled interactions.
 
-The concept of permission is redefined and is now associated with `Actor Models`, not directly with policies. This enables a more structured and precise definition of permissions, aligning them with application code and specific use cases.
+### 1.2 Key Features
 
-In this framework, Identity Providers (IDPs) associate identities and its roles with one or more `Identity Actor Models` rather than just a set of policies. Multiple `Actor Models` can be linked to a single permission using operations like Union, Intersection, and Difference, enabling flexible and precise authorization.
+The `Identity Actor Model` introduces several improvements to how permissions and roles are managed within a system:
 
-### 1.1 Clarification on Assumptions
+- **Redefining Permissions:** Permissions are tied directly to `Actor Models` rather than policies, ensuring a more precise alignment with system roles and specific scenarios.
+
+- **Integration with Identity Providers:** Identity Providers (IDPs) link identities and roles to one or more `Actor Models`, providing a more organized and flexible approach to authorization compared to traditional policy-based systems.
+
+- **Flexible Authorization:** The framework allows for combining `Actor Models` using operations like Union, Intersection, and Difference, enabling tailored permissions for complex scenarios.
+
+By following these principles, the `Identity Actor Model` helps developers create secure, efficient systems that can adapt to changing needs.
+
+### 1.3 Clarification on Assumptions
 
 `ZTAuth*` assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
 
@@ -22,29 +33,29 @@ In this framework, Identity Providers (IDPs) associate identities and its roles 
 
 This approach ensures that `ZTAuth*` remains streamlined and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
 
-### 1.2 Zero Trust Architecture (ZTApp or ZTApplication)
+### 1.4 Zero Trust Architecture (ZTApp or ZTApplication)
 
 The `ZTAuth*` Architecture is outlined here. For further details, please refer to other specifications, if available, or consult the publications in the [ztauthstar-publications](https://github.com/ztauthstar/ztauthstar-publications) repository.
 
 ![`ZTAuth*`Architecture](ztauth-architecture.png "Zero Trust Auth* Architecture")
 
-### 1.3 Fields of Application
+### 1.5 Fields of Application
 
- The `Identity Actor Model` is designed for diverse applications across multiple domains, including but not limited to:
+The `Identity Actor Model` is versatile and applies to a wide range of domains, including:
 
-- **Cloud Computing**: Providing secure and precise access control to cloud resources and services.
-- **Microservices Architecture**: Facilitating secure interactions between microservices while maintaining isolation and trust boundaries.
-- **API Management**: Enforcing secure, controlled, and auditable access to APIs.
-- **IoT and Edge Computing**: Managing secure communications between devices, gateways, and cloud or edge services.
-- **Multi-Tenant Systems**: Ensuring secure collaboration, resource segregation, and isolation between multiple tenants in shared environments.
-- **Distributed Systems**: Maintaining secure and controlled operations across geographically or logically distributed components.
-- **Federated Systems**: Enabling secure integration and collaboration between entities managed by different organizations or applications.
-- **Blockchain and Distributed Ledger Technology (DLT)**: Supporting secure interactions between `nodes`, smart contracts, and decentralized applications.
-- **Data Privacy and Compliance**: Allowing secure access and processing of sensitive data while meeting regulatory requirements.
-- **DevOps and CI/CD**: Ensuring secure and controlled automation for software deployment and operations pipelines.
-- **Machine Learning and AI**: Managing secure interactions between models, training datasets, and inference systems.
-- **Digital Transformation**: Supporting secure and scalable operations in modern, evolving IT environments.
-- **Digital Wallets**: Providing secure and controlled operations for digital wallets, applicable to both private and public sectors.
+- **Cloud Computing**: Secure and precise access control for cloud resources.
+- **Microservices**: Enforcing secure interactions while maintaining isolation.
+- **API Management**: Providing controlled and auditable API access.
+- **IoT and Edge Computing**: Managing secure device-to-cloud and edge interactions.
+- **Multi-Tenant Systems**: Ensuring resource segregation and tenant isolation.
+- **Distributed Systems**: Securing operations across distributed components.
+- **Federated Systems**: Enabling safe collaboration between independent entities.
+- **Blockchain/DLT**: Supporting secure `node`, smart contract, and app interactions.
+- **Data Privacy**: Handling sensitive data securely and meeting compliance.
+- **DevOps/CI/CD**: Automating secure deployments and operations.
+- **AI/ML**: Managing secure access to models and datasets.
+- **Digital Transformation**: Scaling secure operations in modern IT.
+- **Digital Wallets**: Ensuring secure transactions for wallets in public and private sectors.
 
 We can summarize as following:
 
@@ -99,6 +110,17 @@ Important Notes:
    `nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
    For example, a possible chain could be:  
    `API -> Worker -> API -> API -> Worker -> Robot -> API -> Worker -> API`.
+
+### 1.6 Reference Scenario
+
+To explain the concepts in this document, consider an **accounting system** with two business roles:
+
+- **John**: An accountant who manages all parts of the invoice process (view, create, update, delete, approve, reject).
+- **Bob**: An apprentice who can only view invoices and cannot perform other actions.
+
+As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to **create new invoices**, but these invoices must stay pending until approved by another accountant.
+
+This example shows how responsibilities can be shared in a controlled way, with clear limits to ensure accountability and security.
 
 ## 2. Pairing of the `Central Server` and `Nodes`
 
