@@ -355,6 +355,33 @@ Steps to Elevate to the `Actor Model`:
 4. **Authorization Check**:
    The final step is to verify whether the `Principal` is authorized to execute the requested action within the `Authorization Context`. This ensures strict compliance with the defined policies.
 
+Below is an example of how the code might look in a FastAPI application:
+
+```python
+@app.get("/check-permission")
+async def has_permission(
+    actor: str,
+    domain: str,
+    resource: str,
+    action: str,
+    token: str = Depends(oauth2_scheme),
+):
+    """
+    Endpoint to check if the actor has permission for a specific action.
+    
+    :param actor: Actor identifier
+    :param domain: Domain name
+    :param resource: Resource name
+    :param action: Action to check
+    :param token: JWT token for authentication
+    """
+    if not check_permissions(token, actor, domain, resource, action):
+        raise HTTPException(
+            status_code=403, detail="Permission denied for the requested action."
+        )
+    return {"message": "Permission granted."}
+```
+
 Differences Between Role-Based and Digital Twin Actors:
 
 - **Role-Based Actor**:
