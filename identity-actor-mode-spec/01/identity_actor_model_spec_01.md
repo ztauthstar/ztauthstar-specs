@@ -382,6 +382,9 @@ async def has_permission(
     return {"message": "Permission granted."}
 ```
 
+In the sample above, there is no `Node Token` explicitly shown, as it is implicitly used in the background to synchronize the `Auth*` models locally, in alignment with the `ZTAuth*` Architecture.
+It is the responsibility of the `ZTAuth*` framework implementation to handle `Node Token` authentication and the synchronization of `Auth*` models.
+
 Differences Between Role-Based and Digital Twin Actors:
 
 - **Role-Based Actor**:
