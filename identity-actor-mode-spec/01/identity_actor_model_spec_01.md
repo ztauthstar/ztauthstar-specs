@@ -156,8 +156,8 @@ The `accountant-viewer-actor` is a `Role-Based Actor` representing a delegated i
     "actor_model_id": 1,
     "actor_model_type": "role-based-actor",
     "actor_model_name": "accountant-viewer-actor",
-    "delegated_by": "*",
-    "assumed_by": ["*", "trusted"]
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
 }
 ```
 
@@ -168,8 +168,8 @@ The `accountant-authoring-actor` is a `Role-Based Actor` representing a delegate
     "actor_model_id": 2,
     "actor_model_type": "role-based-actor",
     "actor_model_name": "accountant-authoring-actor",
-    "delegated_by": "*",
-    "assumed_by": ["*", "trusted"]
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
 }
 ```
 
@@ -180,8 +180,8 @@ The `accountant-approver-actor` is a `Role-Based Actor` representing a delegated
     "actor_model_id": 3,
     "actor_model_type": "role-based-actor",
     "actor_model_name": "accountant-approver-actor",
-    "delegated_by": "*",
-    "assumed_by": ["*", "trusted"]
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
 }
 ```
 
@@ -192,8 +192,8 @@ The `apprentice-actor` is a `Role-Based Actor` representing a delegated identity
     "actor_model_id": 4,
     "actor_model_type": "role-based-actor",
     "actor_model_name": "apprentice-actor",
-    "delegated_by": "*",
-    "assumed_by": ["*", "trusted"]
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
 }
 ```
 
@@ -204,8 +204,8 @@ The `john-actor` is a `Digital Twin Actor` representing a delegated identity tha
     "actor_model_id": 5,
     "actor_model_type": "digital-twin-actor",
     "actor_model_name": "john-actor",
-    "delegated_by": "john",
-    "assumed_by": ["john", "trusted"]
+    "actor_identity": "john",
+    "assumed_by": ["itself", "strictly-trusted"]
 }
 ```
 
@@ -216,8 +216,8 @@ The `bob-actor` is a `Digital Twin Actor` representing a delegated identity that
     "actor_model_id": 6,
     "actor_model_type": "digital-twin-actor",
     "actor_model_name": "bob-actor",
-    "delegated_by": "bob",
-    "assumed_by": ["bob", "trusted"]
+    "actor_identity": "bob",
+    "assumed_by": ["itself", "strictly-trusted"]
 }
 ```
 
