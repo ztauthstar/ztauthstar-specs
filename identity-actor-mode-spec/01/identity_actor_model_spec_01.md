@@ -21,7 +21,7 @@ The `Identity Actor Model` enhances user, role and group management with:
 
 - **Customizable `Actor Models`:** Combine `Actor Models` using Union, Intersection, and Difference to support complex permission scenarios.
 
-These features make the `Identity Actor Model` a secure, efficient, and scalable solution for modern systems.
+These features make the `Identity Actor Model` a secure, efficient, scalable, and flexible solution for modern systems.
 
 ### 1.3 Clarification on Assumptions
 
