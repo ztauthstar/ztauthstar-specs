@@ -109,23 +109,23 @@ It is important to note that the `Principal` and both `Nodes` are authenticated 
 
 This ensures that the distributed nature of the asynchronous operation remains secure and bounded. At both ends, the operations run within the same authorization context, as if the entire process were handled by a single node.
 
-## 2. The `Actor Model` and `Authorization Context`
+## 2. The Actor Model and Authorization Context
 
 According to the `ZTAuth*` Architecture, the `Actor Model` is strictly linked to the `Authorization Context`. The `Authorization Context` is derived from the `Authorization Model`, which consists of a structured collection of `Policies`.
 
-### 2.1 `Policies` Definition
+### 2.1 Definition of Policies
 
 -- to be defined --
 
-### 2.2 `Actor Models` Definition
+### 2.2 Definition of Actor Models
 
 -- to be defined --
 
-### 2.3 The `Actor Model` Autetication Model
+### 2.3 Definition of Authorization Models
 
 -- to be defined --
 
-### 2.4 `Authorization Context` and operations
+### 2.4 Elevating to the Actor Model
 
 -- to be defined --
 
