@@ -140,6 +140,13 @@ There are two types of `Actors` in this context:
 
 Let’s explore how to create examples of `Actor Models` for both types.
 
+| Actor Model ID | Actor Model Name |
+|----------------|------------------|
+| 1              | accountant-actor |
+| 2              | apprentice-actor |
+| 3              | john-actor       |
+| 4              | bob-actor        |
+
 ### 2.3 Definition of Authorization Models
 
 -- to be defined --
