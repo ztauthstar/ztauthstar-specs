@@ -2,11 +2,11 @@
 
 ## 1. Introduction
 
-This specification introduces the `Identity Actor Model`, a key part of the Zero Trust Auth* (`ZTAuth*`) Framework.
-It provides a secure and organized way to manage authorization, following the principles of Zero Trust.
+This specification introduces the `Identity Actor Model`, a core component of the Zero Trust Auth* (`ZTAuth*`) Framework.
+It implements the `ZTAuth*` Architecture to provide a secure, scalable, and organized way to manage authorization, aligning with Zero Trust principles.
 
-The `Identity Actor Model`, also called the `Actor Model` or simply `Actor`, allows for secure operations based on permissions.
-It connects permissions directly to specific authorization scenarios, ensuring systems only use the minimum permissions needed to work efficiently and securely.
+The `Identity Actor Model`, also called the `Actor Model` or simply `Actor`, allows for secure operations based on policies.
+It connects policies directly to specific authorization contexts, ensuring systems only use the minimum permissions needed to work efficiently and securely.
 
 ### 1.1 Purpose
 
@@ -15,15 +15,13 @@ It provides clear guidance for both architecture and implementation to enable pe
 
 ### 1.2 Key Features
 
-The `Identity Actor Model` introduces several improvements to how permissions and roles are managed within a system:
+The `Identity Actor Model` enhances user, role and group management with:
 
-- **Redefining Permissions:** Permissions are tied directly to `Actor Models` rather than policies, ensuring a more precise alignment with system roles and specific scenarios.
+- **Direct Link Between Identities and `Actor Models`:** Users, roles and groups are mapped directly to `Actor Models`, ensuring clear alignment with system roles and requirements.
 
-- **Integration with Identity Providers:** Identity Providers (IDPs) link identities and roles to one or more `Actor Models`, providing a more organized and flexible approach to authorization compared to traditional policy-based systems.
+- **Flexible Authorization Options:** Combine `Actor Models` using Union, Intersection, and Difference to support complex permission scenarios.
 
-- **Flexible Authorization:** The framework allows for combining `Actor Models` using operations like Union, Intersection, and Difference, enabling tailored permissions for complex scenarios.
-
-By following these principles, the `Identity Actor Model` helps developers create secure, efficient systems that can adapt to changing needs.
+These features make the `Identity Actor Model` a secure, efficient, and scalable solution for modern systems.
 
 ### 1.3 Clarification on Assumptions
 
