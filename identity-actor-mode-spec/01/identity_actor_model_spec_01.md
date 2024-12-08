@@ -33,9 +33,11 @@ This approach ensures that `ZTAuth*` remains focused and dedicated to authorizat
 
 ### 1.4 Integration with Zero Trust Architecture
 
-The `ZTAuth*` Architecture is outlined in this diagram `https://github.com/ztauthstar/ztauthstar-specs/blob/main/identity-actor-mode-spec/01/ztauth-architecture.png`.
+The `ZTAuth*` Architecture is outlined below.
 
 For further details, refer to `https://github.com/ztauthstar/ztauthstar-publications`.
+
+![ZTAuth* Architecture](./images/ztauth-architecture.png)
 
 ### 1.5 Applicable Use Domains
 
@@ -64,41 +66,11 @@ Below are two illustrative examples to help understand the concept. These are pu
 
 - An API receives a request from a client and identifies the principal using the provided Authentication Token. Once the principal is identified, the system elevates to a specific `Actor Model` and performs the action on behalf of the principal. This action may involve various operations, such as sending a message to a message broker like Kafka in a signed and certified manner. Subsequently, a Worker `node`, operating with its own authentication token as a service account, retrieves the message from the message broker. The Worker `node` verifies the message, elevates to the target `Actor Model`, and executes the intended action on behalf of the principal, ensuring secure and controlled operations throughout the process.
 
-```text
-# API to Worker Node Communication
-
-    +------+                    +--------+
-    |  API |                    | Worker |
-    +------+                    +--------+
-        |                             ^
-        v                             |
-    +----------------+             +----------------+
-    | Kafka Producer | ----------> | Kafka Consumer |
-    +----------------+             +----------------+
-                Kafka (Message Exchange)
-```
+![Sample API to Worker](./images/sample-api-to-worker.png)
 
 - An AI-powered robot with sensors acts as a field agent and receives commands directly from a client (principal). The robot identifies the principal using an Authentication Token and elevates to a specific `Actor Model`. The elevated context ensures the robot can perform actions securely on behalf of the principal. The robot processes the input, interacts with its onboard devices (e.g., cameras or actuators), and performs tasks such as collecting data or performing physical actions in the field. If a secondary operation is required, such as delegating tasks to another robot or device, the first robot communicates securely with the second device. This communication uses the same principle of verifying messages, elevating to the required `Actor Model`, and performing actions securely and within the bounds of the assigned authorization.
 
-```text
-# Client to Robot Communication
-
-+------------+                 +-------------+
-|   Client   |                 |    Robot    |
-| (Principal)|                 | (AI Agent)  |
-+------------+                 +-------------+
-       |                             ^
-       |                             |
-       |                         +----------------+
-       |------------------------>| Robot Sensors  |
-                                 +----------------+
-                           Field Operations Secondary Device
-                                           |
-                                           v
-                                  +----------------+
-                                  |  Other Device  |
-                                  +----------------+
-```
+![Sample API to Worker](./images/sample-robot-to-robot.png)
 
 Important Notes:
 
@@ -118,6 +90,8 @@ To explain the concepts in this document, consider an **accounting system** with
 As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to either **create or update new invoices**, but these invoices must remain pending until approved by another accountant.
 
 This example demonstrates how responsibilities can be shared in a bounded way, with clear limits to ensure accountability and security.
+
+![Implementation Scenario](./images/ztauth-actor-model-sample.png)
 
 ## 2. Pairing of the `Central Server` and `Nodes`
 
