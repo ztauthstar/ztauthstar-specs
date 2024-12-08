@@ -294,6 +294,8 @@ In the context of operation chaining, the multiple `Central Servers` exchange th
 
 ## Appendix A. Terminology
 
+### A.1 Glossary of Terms
+
 Here is the list of terms used in this document:
 
 - **`Identity`**: A unique representation of a user, service account, or any other entity recognized by the system. An `Identity` is the foundational concept that defines who or what is interacting with the system, often provided or verified by an Identity Provider (IdP).
@@ -309,7 +311,7 @@ Here is the list of terms used in this document:
 
 ## Appendix B. Definitions
 
-### Appendix B.1. Actor Model Definition
+### B.1. Definition of the Actor Model
 
 An `Actor` is a type of `delegated identity` that can be `temporarily assumed` by a `Principal` (e.g., a user or an entity represented by an Identity Provider - IdP). `Actors` are designed to `encapsulate specific` and `isolated contexts`, allowing `limited` and `purpose-driven permissions` for particular tasks. They can be configured for the following scenarios:
 
@@ -339,16 +341,22 @@ Advantages for Distributed and Multi-Organization Systems:
 
 ## Appendix C. Document History
 
+### C.1 Revision History
+
 - 01 - Initial version
 
 ## Appendix D. Specification Notice
+
+### D.1 Guidelines for Referencing
 
 Whenever terms or concepts related to `ZTAuth*` are referenced in this document but not explicitly defined within the current specification, please consult the latest publications and state-of-the-art specifications on `ZTAuth*`.
 
 Additionally, this document uses domain-specific languages (DSL) and JSON as representative examples. These are only illustrative and should not be considered prescriptive.
 A real-world implementation may include additional fields or differ in structure, depending on the specific context and implementation requirements. These examples are solely provided to describe and clarify the functionality.
 
-## Appendix E. License & Legal Notice
+## Appendix E. License and Legal Notice
+
+### E.1 Licensing Terms and Conditions
 
 This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
 
@@ -365,6 +373,8 @@ This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 
 > Copyright © 2024 Nitro Agility S.r.l. All Rights Reserved.
 
 ## Appendix F. Authors
+
+### F.1 List of Authors and Contributors
 
 Authored by:
 
