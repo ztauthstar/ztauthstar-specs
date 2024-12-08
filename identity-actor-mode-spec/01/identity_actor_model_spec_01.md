@@ -29,7 +29,7 @@ These features make the `Identity Actor Model` a secure, efficient, scalable, an
 
 `ZTAuth*` primarily focuses on **Zero Trust** security, managing the metadata of identities provided by the IdP and implementing the entire Authorization (AuthZ) layer.
 
-This approach ensures that `ZTAuth*` remains streamlined and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
+This approach ensures that `ZTAuth*` remains focused and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
 
 ### 1.4 Zero Trust Architecture (ZTApp or ZTApplication)
 
@@ -39,9 +39,9 @@ For further details, refer to `https://github.com/ztauthstar/ztauthstar-publicat
 
 ### 1.5 Fields of Application
 
-The `Identity Actor Model` is versatile and applies to a wide range of domains, including:
+The `Identity Actor Model` is versatile and applies to a wide range of domains, including, but not limited to:
 
-- **Cloud Computing**: Secure and precise access control for cloud resources.
+- **Cloud Computing**: Secure and precise access control for cloud resources and services.
 - **Microservices**: Enforcing secure interactions while maintaining isolation.
 - **API Management**: Providing controlled and auditable API access.
 - **IoT and Edge Computing**: Managing secure device-to-cloud and edge interactions.
@@ -53,11 +53,11 @@ The `Identity Actor Model` is versatile and applies to a wide range of domains, 
 - **DevOps/CI/CD**: Automating secure deployments and operations.
 - **AI/ML**: Managing secure access to models and datasets.
 - **Digital Transformation**: Scaling secure operations in modern IT.
-- **Digital Wallets**: Ensuring secure transactions for wallets in public and private sectors.
+- **Digital Wallets**: Ensuring secure management and transactions for wallets in public and private sectors.
 
 We can summarize as following:
 
-    The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `node` is responsible for managing requests from a principal. The `node` securely processes these requests by operating within a clearly defined authorization context, performing actions strictly on behalf of the principal while enforcing the necessary security and operational boundaries.
+    The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `Node` is responsible for managing requests from a `Principal`. The `Node` securely processes these requests within a clearly defined authorization context, acting as an `Actor` and performing actions strictly on behalf of the `Principal` while enforcing necessary security and operational boundaries.
 
 Below are two illustrative examples to help understand the concept. These are purely figurative and not exhaustive, meant only to provide practical context:
 
