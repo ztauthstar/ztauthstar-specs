@@ -348,7 +348,7 @@ Whenever terms or concepts related to `ZTAuth*` are referenced in this document 
 Additionally, this document uses domain-specific languages (DSL) and JSON as representative examples. These are only illustrative and should not be considered prescriptive.
 A real-world implementation may include additional fields or differ in structure, depending on the specific context and implementation requirements. These examples are solely provided to describe and clarify the functionality.
 
-## Appendix E. Notices
+## Appendix E. License & Legal Notice
 
 This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
 
