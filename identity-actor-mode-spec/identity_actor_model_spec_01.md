@@ -12,7 +12,7 @@ The `Identity Actor Model` is a new concept that offers clear guidelines for imp
 
 The concept of permission is redefined and is now associated with `Actor Models`, not directly with policies. This enables a more structured and precise definition of permissions, aligning them with application code and specific use cases.
 
-In this framework, Identity Providers (IDPs) associate identities with one or more `Identity Actor Models` rather than just a set of policies. Multiple `Actor Models` can be linked to a single permission using operations like Union, Intersection, and Difference, enabling flexible and precise authorization.
+In this framework, Identity Providers (IDPs) associate identities and its roles with one or more `Identity Actor Models` rather than just a set of policies. Multiple `Actor Models` can be linked to a single permission using operations like Union, Intersection, and Difference, enabling flexible and precise authorization.
 
 ### 1.1 Clarification on Assumptions
 
