@@ -2,16 +2,17 @@
 
 ## 1 Introduction
 
-This specification defines the `Identity Actor Model` as a foundational concept within the Zero Trust Auth* (`ZTAuth*`) Framework.
-The `ZTAuth*` Framework strictly adheres to and implements the principles of the `ZTAuth*` Architecture.
+This specification defines the `Identity Actor Model` as a core concept within the Zero Trust Auth* (`ZTAuth*`) Framework. The `ZTAuth*` Framework strictly adheres to and implements the `ZTAuth*` Architecture.
 
-The goal of this specification is to provide the architecture and implementation details necessary for a `node` to securely act as an `Actor` on behalf of a `Principal`. This ensures secure and controlled operations, fully aligned with the Zero Trust principles.
+Throughout the rest of this document, the `Identity Actor Model` may also be referred to as `Actor Model` or simply `Actor`.
 
-The `Identity Actor Model` is a transformative concept, offering clear guidance for implementing secure operations and inherently directing system architecture to build correct authorization models. These models are designed with Zero Trust Security as the foundational principle, ensuring that permissions and actions are always limited to what is strictly necessary.
+The goal of this specification is to provide both architectural and implementation details necessary for a `node` to securely act as an `Actor` on behalf of a `Principal`, ensuring secure and controlled operations fully aligned with Zero Trust principles.
 
-Under this framework, the Identity Provider (IDP) can create roles associated with identities, which reference one or more `Identity Actor Models`. When combining `Identity Actor Models`, the system must allow flexibility to specify whether multiple actor models can be assumed simultaneously within a single session, if the actor model is exclusive to a session, or if the behavior reflects a form of intersection between models.
+The `Identity Actor Model` is a new concept that offers clear guidelines for implementing secure, permission-based operations. It provides a structured approach to designing system architectures with robust authorization models, ensuring that permissions and actions are always limited to what is strictly necessary. This helps software developers create secure and efficient systems.
 
-To clarify, roles can associate multiple `Identity Actor Models` using mathematical operations such as Union, Intersection, and Difference. This enables precise and flexible permission assignments, ensuring that every role operates within a clearly defined, auditable, and secure authorization context.
+The concept of permission is redefined and is now associated with `Actor Models`, not directly with policies. This enables a more structured and precise definition of permissions, aligning them with application code and specific use cases.
+
+In this framework, Identity Providers (IDPs) associate identities with one or more `Identity Actor Models` rather than just a set of policies. Multiple `Actor Models` can be linked to a single permission using operations like Union, Intersection, and Difference, enabling flexible and precise authorization.
 
 ### 1.1 Clarification on Assumptions
 
