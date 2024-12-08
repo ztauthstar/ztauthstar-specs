@@ -5,8 +5,8 @@
 This specification introduces the `Identity Actor Model`, a core component of the Zero Trust Auth* (`ZTAuth*`) Framework.
 It implements the `ZTAuth*` Architecture to provide a secure, scalable, and organized way to manage authorization, aligning with Zero Trust principles.
 
-The `Identity Actor Model`, also called the `Actor Model` or simply `Actor`, allows for secure operations based on policies.
-It connects policies directly to specific authorization contexts, ensuring systems only use the minimum permissions needed to work efficiently and securely.
+The `Identity Actor Model`, also known as the `Actor Model` or simply `Actor`, enables secure, permission-based operations through policies.
+It links policies directly to specific authorization contexts, ensuring systems operate with only the minimum permissions required for efficiency and security.
 
 ### 1.1 Purpose
 
