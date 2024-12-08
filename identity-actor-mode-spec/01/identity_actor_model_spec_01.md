@@ -74,7 +74,7 @@ Below are two illustrative examples to help understand the concept. These are pu
 
 Important Notes:
 
-- **Authentication Agnosticism**: The principal can be recognized by the system using an `Authentication Token` or any other industry-standard authentication mechanism. 
+- **Authentication Agnosticism**: The principal can be recognized by the system using an `Authentication Token` or any other industry-standard authentication mechanism.
   This approach ensures the system is agnostic to specific authentication implementations, providing flexibility and compatibility across various standards.
 
 - **`Node` Chaining**: `Nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
@@ -140,16 +140,105 @@ There are two types of `Actors` in this context:
 
 Let’s explore how to create examples of `Actor Models` for both types.
 
-| Actor Model ID | Actor Model Name |
-|----------------|------------------|
-| 1              | accountant-actor |
-| 2              | apprentice-actor |
-| 3              | john-actor       |
-| 4              | bob-actor        |
+| Actor Model ID | Actor Model Type   | Actor Model Name           |
+|----------------|--------------------|----------------------------|
+| 1              | role-based-actor   | accountant-viewer-actor    |
+| 2              | role-based-actor   | accountant-authoring-actor |
+| 3              | role-based-actor   | apprentice-approving-actor |
+| 4              | role-based-actor   | apprentice-actor           |
+| 5              | digital-twin-actor | john-actor                 |
+| 6              | digital-twin-actor | bob-actor                  |
+
+The `accountant-viewer-actor` is a `Role-Based Actor` representing a delegated identity with permissions to view invoices.
+
+```json
+{
+    "actor_model_id": 1,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-viewer-actor",
+    "delegated_by": "*",
+    "assumed_by": ["*", "trusted"]
+}
+```
+
+The `accountant-authoring-actor` is a `Role-Based Actor` representing a delegated identity with permissions to create, update, and delete invoices.
+
+```json
+{
+    "actor_model_id": 2,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-authoring-actor",
+    "delegated_by": "*",
+    "assumed_by": ["*", "trusted"]
+}
+```
+
+The `accountant-approver-actor` is a `Role-Based Actor` representing a delegated identity with permissions to approve or reject invoices.
+
+```json
+{
+    "actor_model_id": 3,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-approver-actor",
+    "delegated_by": "*",
+    "assumed_by": ["*", "trusted"]
+}
+```
+
+The `apprentice-actor` is a `Role-Based Actor` representing a delegated identity with permissions to view invoices.
+
+```json
+{
+    "actor_model_id": 4,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "apprentice-actor",
+    "delegated_by": "*",
+    "assumed_by": ["*", "trusted"]
+}
+```
+
+The `john-actor` is a `Digital Twin Actor` representing a delegated identity that exactly mirrors John's permissions, allowing him to create, update, delete, approve, and reject invoices.
+
+```json
+{
+    "actor_model_id": 5,
+    "actor_model_type": "digital-twin-actor",
+    "actor_model_name": "john-actor",
+    "delegated_by": "john",
+    "assumed_by": ["john", "trusted"]
+}
+```
+
+The `bob-actor` is a `Digital Twin Actor` representing a delegated identity that exactly mirrors Bob's permissions, allowing him to view invoices only.
+
+```json
+{
+    "actor_model_id": 6,
+    "actor_model_type": "digital-twin-actor",
+    "actor_model_name": "bob-actor",
+    "delegated_by": "bob",
+    "assumed_by": ["bob", "trusted"]
+}
+```
+
+The `ZTAuth*` framework supports both `Role-Based Actors` and `Digital Twin Actors`. However, best practice recommends prioritizing the use of `Role-Based Actors` because they are more flexible and applicable to a wider range of scenarios.
+
+Adding `Digital Twin Actors` should only be done when strictly necessary, as they create an `Authorization Context` that mirrors the original `Principal`. This can result in granting more permissions than needed, weakening the principle of least privilege.
+
+Using bounded `Authorization Contexts` ensures that only the permissions required for the current task are loaded, enhancing security. For instance, if a system bug attempts to execute an action that is permitted for the `Principal` but not for the specific operation being performed, a `Role-Based Actor` will block the action. Conversely, a `Digital Twin Actor` might allow it to proceed, increasing the risk of unintended actions.
 
 ### 2.3 Definition of Authorization Models
 
--- to be defined --
+The `Authorization Model` maps policies to the corresponding `Actor Models`. Below is the definition of the `Authorization Model` for the implementation scenario.
+
+| Actor Model ID | Actor Model Type   | Actor Model Name           | Policies                                                                                      |
+|----------------|--------------------|----------------------------|-----------------------------------------------------------------------------------------------|
+| 1              | role-based-actor   | accountant-viewer-actor    | view-invoice                                                                                  |
+| 2              | role-based-actor   | accountant-authoring-actor | create-invoice, update-invoice, delete-invoice                                                |
+| 3              | role-based-actor   | apprentice-approving-actor | approve-invoice, reject-invoice                                                               |
+| 4              | role-based-actor   | apprentice-actor           | view-invoice                                                                                  |
+| 5              | digital-twin-actor | john-actor                 | view-invoice, create-invoice, update-invoice, delete-invoice, approve-invoice, reject-invoice |
+| 6              | digital-twin-actor | bob-actor                  | view-invoice                                                                                  |
 
 ### 2.4 Elevating to the Actor Model
 
