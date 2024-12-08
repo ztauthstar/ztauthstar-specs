@@ -509,14 +509,13 @@ Here is an example of the `Trusted Elevation List` structure:
   "node_name": "Node1",
   "trusted_elevations": [
     {
-      "identity_actor": "admin_actor",
-      "description": "Administrator privileges to manage sensitive data.",
+      "identity_actor": "accountant-authoring-actor",
       "valid_from": "2024-01-01T00:00:00Z",
       "valid_until": "2025-01-01T00:00:00Z",
       "signature": "server_signature_for_admin_actor"
     },
     {
-      "identity_actor": "monitor_actor",
+      "identity_actor": "accountant-viewer-actor",
       "valid_from": "2024-01-01T00:00:00Z",
       "valid_until": "2025-01-01T00:00:00Z",
       "signature": "server_signature_for_monitor_actor"
