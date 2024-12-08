@@ -230,13 +230,18 @@ The `Authorization Model` contains all the policies and data needed by the `Node
 
 ## 4 Trusted Operation Chaining
 
-Covers the process of securely chaining multiple `nodes`, ensuring that each `node` elevates to the appropriate `Identity Actor` and performs actions on behalf of the principal.  
+This section covers the process of securely chaining multiple `nodes`, ensuring that each `node` elevates to the appropriate `Identity Actor` and performs actions on behalf of the principal.
 This process ensures the safe chaining of multiple `nodes`, even in the absence of communication with the `Central Server`.
+
+In practice, this works by forwarding requests from one `node` to another. Each `node` presents its certificate as proof that it received a request from a client. The certificate is signed with the private key of the `node`, and this signature can be verified by the next `node` in the chain, ensuring the authenticity and integrity of the request.
 
 ## 5 Trusted Federation
 
-Describes the secure integration of multiple `nodes` across federated environments, ensuring that each `node` operates within the security boundaries of its `Identity Actor` and maintains secure communication with the relevant `Central Servers`.  
-By federated environments, we refer to multiple `Central Servers` that may belong to the same organization/application or to different organizations/applications.
+Trusted Federation refers to the secure integration of multiple `nodes` across federated environments, ensuring that each `node` operates within the security boundaries of its `Identity Actor` and maintains secure communication with the relevant `Central Servers`.
+
+Federated environments consist of multiple `Central Servers` that may belong to the same organization/application or different organizations/applications.
+
+In the context of operation chaining, the multiple `Central Servers` exchange their public keys and verify the authenticity of the `nodes` that are part of the operation chain request. This ensures that each `node` in the chain is trusted and authorized to perform the requested operations.
 
 ## Appendix A. Terminology
 
