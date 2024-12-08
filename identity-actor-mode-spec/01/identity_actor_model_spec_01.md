@@ -25,7 +25,7 @@ These features make the `Identity Actor Model` a secure, efficient, scalable, an
 
 ### 1.3 Clarification on Assumptions
 
-`ZTAuth*` assumes that Identity Providers (IdPs) are now a standard and, as such, they are responsible for managing core identity aspects such as Users, Roles, and Groups.
+`ZTAuth*` assumes that Identity Providers (IdPs) are now the standard and are responsible for managing core identity aspects, such as Users, Roles, and Groups, specifically in the context of Authentication (AuthN) and identity management.
 
 `ZTAuth*` primarily focuses on **Zero Trust** security, managing the metadata of identities provided by the IdP and implementing the entire Authorization (AuthZ) layer.
 
@@ -268,7 +268,7 @@ In the context of operation chaining, the multiple `Central Servers` exchange th
 
 Here is the list of terms used in this document:
 
-- **`Identity`**: A unique representation of a user, service account, or any other entity recognized by the system. An `Identity` is the foundational concept that defines who or what is interacting with the system, often provided or verified by an Identity Provider (IDP).
+- **`Identity`**: A unique representation of a user, service account, or any other entity recognized by the system. An `Identity` is the foundational concept that defines who or what is interacting with the system, often provided or verified by an Identity Provider (IdP).
 - **`Principal`**: A specific `Identity` actively engaged in an authenticated session or action within the system. A `Principal` represents the operational context of an `Identity` during its interaction with the system, including its roles, permissions, and any assumed responsibilities.
 - **`Node`**: A hardware or software component in the system architecture. It receives requests from a principal and performs actions within an authorization context on behalf of that principal.
 - **`API Key`**: The **API Key** consists of a unique **ID** and a **secret**; the **secret** is hashed before being stored to enhance security, ensuring that sensitive data is protected even if the database is compromised.
