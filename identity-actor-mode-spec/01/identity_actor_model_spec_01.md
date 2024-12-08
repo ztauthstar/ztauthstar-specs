@@ -375,7 +375,7 @@ async def has_permission(
     :param action: Action to check
     :param token: JWT token for authentication
     """
-    if not check_permissions(token, actor, domain, resource, action):
+    if not ztauth.check_permissions(token, actor, domain, resource, action):
         raise HTTPException(
             status_code=403, detail="Permission denied for the requested action."
         )
