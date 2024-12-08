@@ -131,7 +131,14 @@ Below is an example of a policy defined for the implementation scenario. A sampl
 
 ### 2.2 Definition of Actor Models
 
--- to be defined --
+The `Actor Model` represents a specific `Actor` within the system. Below, we define the `Actor Model` for the implementation scenario.
+
+There are two types of `Actors` in this context:
+
+- **Role-Based Actor**  
+- **Digital Twin Actor**  
+
+Let’s explore how to create examples of `Actor Models` for both types.
 
 ### 2.3 Definition of Authorization Models
 
@@ -334,7 +341,14 @@ Advantages for Distributed and Multi-Organization Systems:
 
 - 01 - Initial version
 
-## Appendix C. Notices
+## Appendix D. Specification Notice
+
+Whenever terms or concepts related to `ZTAuth*` are referenced in this document but not explicitly defined within the current specification, please consult the latest publications and state-of-the-art specifications on `ZTAuth*`.
+
+Additionally, this document uses domain-specific languages (DSL) and JSON as representative examples. These are only illustrative and should not be considered prescriptive.
+A real-world implementation may include additional fields or differ in structure, depending on the specific context and implementation requirements. These examples are solely provided to describe and clarify the functionality.
+
+## Appendix E. Notices
 
 This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
 
@@ -350,7 +364,7 @@ This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 
 > For inquiries regarding the use of the `ZTAuth*` trademark and its associated logo(s), please contact Nitro Agility S.r.l. at <opensource@nitroagility.com>.
 > Copyright © 2024 Nitro Agility S.r.l. All Rights Reserved.
 
-## Appendix D. Authors
+## Appendix F. Authors
 
 Authored by:
 
