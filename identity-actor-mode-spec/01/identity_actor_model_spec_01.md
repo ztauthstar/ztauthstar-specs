@@ -8,6 +8,10 @@ It implements the `ZTAuth*` Architecture to provide a secure, scalable, and orga
 The `Identity Actor Model`, also known as the `Actor Model` or simply `Actor`, enables secure, permission-based operations through policies.
 It links policies directly to specific authorization contexts, ensuring systems operate with only the minimum permissions required for efficiency and security.
 
+> **Note**: All examples of pseudo-code, JSON, or other formats provided in this document are intended for illustrative purposes only.
+> In a real implementation, the actual fields, their names, or the number of fields may vary depending on the specific requirements and design choices.
+> These examples are descriptive and should not be considered prescriptive or binding.
+
 ### 1.1 Purpose and Scope
 
 The purpose of this specification is to outline how a `Node` can securely act as an `Actor` on behalf of a `Principal`.
@@ -575,62 +579,207 @@ Best Practices for Revocation:
 
 This approach ensures a robust and secure revocation process, whether targeting individual `Nodes` or addressing a system-wide compromise.
 
-## 4 Trusted Elevation and Trusted Delegation
+## 4. Trusted Elevation and Delegation
 
 The `Trusted Elevation` process is a critical component of the `Identity Actor Model`. It ensures that a `Node` can securely elevate its privileges to a specific `Identity Actor` and act on behalf of a `Principal` within the defined security boundaries of an `Authorization Context`.
 
 The `Trusted Delegation` process ensures that a `Node` possesses the necessary permissions to be delegated to act as an `Identity Actor` on behalf of another identity, enabling it to perform actions within a controlled `Authorization Context`. This guarantees secure delegation while maintaining adherence to predefined roles and privileges.
 
-### 4.1 Elevation Requirements
+### 4.1 Trusted Elevation Concept
 
-The `Node` must be authenticated with its `Service Account` to the Identity Provider (IdP).
+The `Node` begins by authenticating with the Identity Provider (IdP) using its service account. Upon successful authentication, the `Node` is prepared to elevate its identity to the `Actor Model` and perform actions on behalf of the `Principal`.
 
-### 4.2 Synchronization of Trusted Elevation
+Key concepts:
 
-The `Node` must synchronize its `Trusted Elevation` list by sending the Authentication Token and the **API Key** to the `Central Server`.
+- **`Node Identity`**: The identity of the service account associated with the `Node`.
+- **`Principal Identity`**: The identity of the `Principal` on whose behalf the `Node` operates.
 
-The `Central Server` will verify the `Service Account` and the `Node`, then send back the list of valid `Trusted Elevations`.
+At this stage, the `Node` transitions from using its own `Node Identity` to the `Principal Identity`. This transition allows the `Node` to execute actions as the `Principal`, shifting the `Authorization Context` from the `Node Identity` to the `Principal Identity`.
 
-The list contains `Identity Actors` to which the `Node` is authorized to elevate. Each `Trusted Elevation` entry is signed by the `Central Server` to ensure the authenticity and integrity of the list.
+To better understand this process, the next section will explore how the system operates within the two actor models:
 
-Here is an example of the `Trusted Elevation List` structure:
+- **Role-Based Actor**
 
 ```json
 {
-  "certificate_version": "1.0",
-  "certificate_type": "trusted_elevation_list",
-  "certificate_id": "03933209-d244-490c-83df-ffad43f20c67",
-  "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
-  "node_name": "Node1",
-  "trusted_elevations": [
-    {
-      "identity_actor": "accountant-authoring-actor",
-      "valid_from": "2024-01-01T00:00:00Z",
-      "valid_until": "2025-01-01T00:00:00Z",
-      "signature": "server_signature_for_admin_actor"
-    },
-    {
-      "identity_actor": "accountant-viewer-actor",
-      "valid_from": "2024-01-01T00:00:00Z",
-      "valid_until": "2025-01-01T00:00:00Z",
-      "signature": "server_signature_for_monitor_actor"
-    }
-  ],
-  "creation_timestamp": "2024-01-01T00:00:00Z",
-  "expiration_timestamp": "2025-01-01T00:00:00Z",
-  "signature": "list_signature"
+    "actor_model_id": 1,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-viewer-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"]
 }
 ```
 
-> **NOTE**: The `Trusted Elevation List` structure is provided as an example and can be customized based on the specific requirements of the system. Additionally, `list_signature` and `server_signature_for_admin_actor` are placeholders for the actual public key and signature.
+- **Digital Twin Actor**
 
-### 4.3 Trusted Elevation Process
+```json
+{
+    "actor_model_id": 6,
+    "actor_model_type": "digital-twin-actor",
+    "actor_model_name": "bob-actor",
+    "actor_identity": "bob",
+    "assumed_by": ["itself", "strictly-trusted"]
+}
+```
 
-The `Client`, before sending the principal, can optionally ask the `Node` if it is able to elevate to a specific `Identity Actor`. The `Client` receives the certificate and validates it.
+The `actor_identity` field in the `Actor Model` defines the identity associated with the `Actor` and behaves as follows:
 
-Once the `Client` sends the request to the `Node`, it will load the `Authorization Context` from the `Authorization Model` and elevate to the specified `Identity Actor` in the request.
+- **For a `Role-Based Actor`**: The `actor_identity` is a wildcard (`*`), meaning any identity can assume this `Actor`. Specifically, the `actor_identity` should match the identity of the `Principal`.
+- **For a `Digital Twin Actor`**: The `actor_identity` mirrors the specific identity of the `Principal`. To ensure proper elevation, the `actor_identity` must be the same as the `Principal`’s identity; otherwise, elevation to the `Actor` will fail.
 
-The `Authorization Model` contains all the policies and data needed by the `Node` to perform the operation and build the `Authorization Context`.
+The `assumed_by` field in the `Actor Model` defines who is allowed to assume the `Actor`. The possible values are:
+
+- **`itself`**:  
+    Only the identity associated with the current request (the `Principal` itself) can assume this `Actor`. This applies only to the `Digital Twin Actor`, where the `actor_identity` must match the `assumed_by` value. In this case, a `Node` with the `Node Identity` equal to the `actor_identity` can elevate to the `Actor`.
+
+- **`trusted`**:  
+    Only trusted `Nodes` can assume this `Actor`. This applies to both `Role-Based Actor` and `Digital Twin Actor`. A `trusted Node` is one that has been registered and verified by the `Central Server` and holds a valid `Identifier Certificate`.
+
+- **`strictly-trusted`**:  
+    This is similar to `trusted`, but more restrictive. It applies only if a specific `Trusted Elevation` has been granted to the `Node Identity` attempting to elevate to the `Actor`. This ensures finer control over which `Node` can assume a specific `Actor`. The `Central Server` can revoke the `Trusted Elevation` if a security threat is detected, preventing the `Node` from elevating as `strictly-trusted` to the `Actor` in the future. This is useful for partitioning computation based on business needs and preventing security breaches.
+
+### 4.2 Trusted Elevation and the Authorization Context
+
+The first operation for the `Node` is to synchronize the list of `Trusted Elevation` permissions with the `Central Server`. Each permission contains specific information regarding the elevation:
+
+```json
+{
+    "certificate_version": "1.0",
+    "certificate_type": "trusted_elevation",
+    "certificate_id": "039a376f-4b6a-42ba-89a4-4a85cbaa7cbd",
+    "certificate_creation_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_expiration_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_signature": "certificate_signature",
+    "certificate_issuer_id": "e341f50e-b3a5-45a2-9253-aa6f30a58bbe",
+    "certificate_issuer_type": "central_server",
+    "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+    "node_name": "Node1",
+    "node_public_key": "node_public_key",
+    "actor_model_id": 1,
+    "actor_model_name": "accountant-viewer-actor",
+    "elevations": [
+        { "actor_model_id": 1, "actor_model_name": "accountant-viewer-actor", "elevation_type": "strictly-trusted" },
+        { "actor_model_id": 6, "actor_model_name": "bob-actor", "elevation_type": "strictly-trusted" },
+    ]
+}
+```
+
+Here is the list of the fields:
+
+- **`certificate_type`**: Specifies the type of certificate (e.g., "trusted_elevation"), indicating its purpose within the system.
+- **`actor_model_id`**: The unique identifier of the `Actor Model` associated with the `Trusted Elevation`.
+- **`actor_model_name`**: The name of the `Actor Model` associated with the `Trusted Elevation`.
+- **`elevations`**: A list of `Actor Models` and their corresponding `elevation_type` values. This list defines which `Actor Models` the `Node` can elevate to and the type of elevation permitted.
+
+The `Node` evaluates the `Trusted Elevation` permissions to determine whether it has the required permissions to elevate to the target `Actor`. If the permissions are sufficient, the `Node` proceeds with the elevation process.
+
+Finally, the `Node` creates the `Authorization Context` for the `Principal` and performs the requested actions within the defined security boundaries.
+
+```json
+{
+    "authorization_context_id": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+    "actor_model_id": 1,
+    "actor_model_name": "accountant-viewer-actor",
+    "actor_identity": "principal_identity",
+    "authorization_policies": ["view-invoice"],
+    "authorization_expiration_timestamp": "2024-01-01T00:00:00Z",
+    "node_name": "Node1",
+    "node_public_key": "node_public_key",
+    "node_identity": "node_identity",
+    "node_authorization_signature": "authorization_signature",
+    "certificate_identifier": {
+        "certificate_version": "1.0",
+        "certificate_type": "node_identifier",
+        "certificate_id": "03933209-d244-490c-83df-ffad43f20c67",
+        "certificate_creation_timestamp": "2024-01-01T00:00:00Z",
+        "certificate_expiration_timestamp": "2024-01-01T00:00:00Z",
+        "certificate_signature": "certificate_signature",
+        "certificate_issuer_id": "e341f50e-b3a5-45a2-9253-aa6f30a58bbe",
+        "certificate_issuer_type": "central_server",
+        "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+        "node_name": "Node1",
+        "node_public_key": "node_public_key"
+    }
+}
+```
+
+Here is the list of fields:
+
+- **`authorization_context_id`**: A unique identifier for the `Authorization Context`.
+- **`actor_model_id`**: The unique identifier of the `Actor Model` associated with the `Authorization Context`.
+- **`actor_model_name`**: The name of the `Actor Model` associated with the `Authorization Context`.
+- **`actor_identity`**: The identity of the `Principal` within the `Authorization Context`.
+- **`authorization_policies`**: A list of policies associated with the `Authorization Context`, defining the actions that can be performed.
+- **`authorization_expiration_timestamp`**: The date and time when the `Authorization Context` expires, ensuring that permissions are time-bound.
+- **`node_name`**: The name of the `Node` operating within the `Authorization Context`.
+- **`node_public_key`**: The public key of the `Node`, used for encryption and verification of communications.
+- **`node_identity`**: The identity of the `Node` within the `Authorization Context`.
+- **`node_authorization_signature`**: A digital signature generated by the `Node`, verifying the authenticity and integrity of the `Authorization Context`.
+- **`certificate_identifier`**: The `Identifier Certificate` associated with the `Node`, providing additional context and verification.
+
+### 4.4 Trusted Delegation Concept
+
+The `Trusted Delegation` process is similar to the `Trusted Elevation` process, but with added complexity.
+It involves delegating the `Node` to act as an `Identity Actor` on behalf of another identity, where the `Principal Identity` has been granted permissions to act through delegation.
+
+### 4.5 Trusted Delegation and the Authorization Context
+
+The first operation for the `Node` is to synchronize the list of `Trusted Delegation` permissions with the `Central Server`. Each permission contains specific information about the delegation:
+
+```json
+{
+    "certificate_version": "1.0",
+    "certificate_type": "trusted_deleation",
+    "certificate_id": "9a5aba95-0ea2-450a-941d-6f3da018ec0f",
+    "certificate_creation_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_expiration_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_signature": "certificate_signature",
+    "certificate_issuer_id": "e341f50e-b3a5-45a2-9253-aa6f30a58bbe",
+    "certificate_issuer_type": "central_server",
+    "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+    "node_name": "Node1",
+    "node_public_key": "node_public_key",
+    "delegator_identity": "principal_delegator_identity",
+    "delegated_identity": "principal_delegated_identity",
+}
+```
+
+After synchronization, the `Node` evaluates the permissions to determine whether it is authorized to act as an `Identity Actor` on behalf of the delegator `Identity` and for the delegated `Principal`. If the `Node` has the necessary permissions, it creates the `Authorization Context` for the delegated `Principal`.
+
+Within this context, the `Node` operates in place of the delegator, performing actions on behalf of the `Principal` while ensuring compliance with the predefined security boundaries and delegation policies.
+
+```json
+{
+    "authorization_context_id": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+    "actor_model_id": 1,
+    "actor_model_name": "accountant-viewer-actor",
+    "actor_identity": "principal_delegator_identity",
+    "actor_delegated_identity": "principal_delegated_identity",
+    "authorization_policies": ["view-invoice"],
+    "authorization_expiration_timestamp": "2024-01-01T00:00:00Z",
+    "node_name": "Node1",
+    "node_public_key": "node_public_key",
+    "node_identity": "node_identity",
+    "node_authorization_signature": "authorization_signature",
+    "certificate_identifier": {
+        "certificate_version": "1.0",
+        "certificate_type": "node_identifier",
+        "certificate_id": "03933209-d244-490c-83df-ffad43f20c67",
+        "certificate_creation_timestamp": "2024-01-01T00:00:00Z",
+        "certificate_expiration_timestamp": "2024-01-01T00:00:00Z",
+        "certificate_signature": "certificate_signature",
+        "certificate_issuer_id": "e341f50e-b3a5-45a2-9253-aa6f30a58bbe",
+        "certificate_issuer_type": "central_server",
+        "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
+        "node_name": "Node1",
+        "node_public_key": "node_public_key"
+    }
+}
+```
+
+A critical element in this process is the `actor_delegated_identity` field, which identifies the `Principal` being delegated to. This field guarantees that the `Node` explicitly operates within the delegation context, enabling precise and compliant delegation.
+
+To ensure Zero Trust compliance, both the delegated entity and the delegator must be audited.
 
 ## 5 Trusted Operation Chaining
 
@@ -641,11 +790,25 @@ In practice, this works by forwarding requests from one `node` to another. Each 
 
 ## 6 Trusted Federation
 
-Trusted Federation refers to the secure integration of multiple `nodes` across federated environments, ensuring that each `node` operates within the security boundaries of its `Identity Actor` and maintains secure communication with the relevant `Central Servers`.
+Trusted Federation refers to the secure integration of multiple `Central Servers` across federated environments.
+This is achieved by the exchange of public keys between `Central Servers`, enabling them to verify and establish trust relationships beyond their individual boundaries.
 
-Federated environments consist of multiple `Central Servers` that may belong to the same organization/application or different organizations/applications.
+In a federated environment:
 
-In the context of operation chaining, the multiple `Central Servers` exchange their public keys and verify the authenticity of the `nodes` that are part of the operation chain request. This ensures that each `node` in the chain is trusted and authorized to perform the requested operations.
+- Each `Central Server` shares its public key with other federated `Central Servers`.
+- These public keys are used to validate the authenticity and trustworthiness of the `Nodes` associated with each `Central Server`.
+
+This process creates a trusted network that extends beyond the boundaries of a single `Central Server`.
+The `Nodes` within the federation operate securely under the `Identity Actor Model`, maintaining consistent and reliable communication with the appropriate `Central Server` while ensuring cross-boundary trust between servers.
+
+In the context of operation chaining:
+
+- Federated `Central Servers` validate the authenticity of the `Nodes` involved in the operation chain using the exchanged public keys.
+- This ensures that every `Node` in the chain is trusted, authorized, and able to securely perform the requested operations, even when crossing the boundaries of individual `Central Servers`.
+
+To maintain the integrity of the federation, all `Central Servers` must implement and adhere to the same revocation criteria applied to individual `Nodes`. This includes:
+
+- **Revocation of Public Keys**: If a `Central Server` or a `Node` within its domain is compromised, its public key must be revoked
 
 ## Appendix A. Terminology
 
@@ -720,7 +883,7 @@ This project is licensed under the [Creative Commons Attribution-ShareAlike 4.0 
 > Any disputes or claims regarding this project should be addressed exclusively to Nitro Agility Srl.
 > Nitro Agility Srl assumes no responsibility for any errors or omissions in referenced content, which remain the responsibility of their respective authors or sources.
 
-[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 > The trademark `ZTAuth*` and its associated logo(s), as contained in this repository, are the exclusive intellectual property of Nitro Agility Srl.
 > All rights reserved. Unauthorized use, reproduction, or distribution of the `ZTAuth*` trademark and its associated logo(s) is strictly prohibited.
