@@ -467,7 +467,7 @@ The `Node` registration process establishes a secure pairing with the `Central S
 
 1. **Request Registration**:  
    A trusted operator requests the `Central Server` to register a new `Node` by providing necessary details such as the `Node` name and the **public key**. This step must occur in a secure environment (e.g., administration console, secure API endpoint) to protect sensitive information during transmission.
-   
+
 2. **Generate Unique Identifier**:  
    The `Central Server` assigns a unique identifier to the `Node` and associates it with the provided details.
 
@@ -578,6 +578,8 @@ This approach ensures a robust and secure revocation process, whether targeting 
 ## 4 Trusted Elevation and Trusted Delegation
 
 The `Trusted Elevation` process is a critical component of the `Identity Actor Model`. It ensures that a `Node` can securely elevate its privileges to a specific `Identity Actor` and act on behalf of a `Principal` within the defined security boundaries of an `Authorization Context`.
+
+The `Trusted Delegation` process ensures that a `Node` possesses the necessary permissions to be delegated to act as an `Identity Actor` on behalf of another identity, enabling it to perform actions within a controlled `Authorization Context`. This guarantees secure delegation while maintaining adherence to predefined roles and privileges.
 
 ### 4.1 Elevation Requirements
 
