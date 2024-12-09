@@ -415,14 +415,14 @@ This process is essential not only for the `Central Server` to manage the `nodes
 The `Central Server` serves as the core component that manages all `ZTApplications` within the `ZTAuth*` Architecture. Typically, a `Node` is linked to a single `ZTApplication`.
 However, there are no strict limitations, and a `Node` can be linked with multiple `ZTApplications` if necessary.
 
-Nodes include both the `Applicative Node` and the proximity-based components, often referred to as `Proximity Nodes` or `PDP Nodes` in the `ZTAuth*` Architecture, designed to handle authorization requests locally with minimal latency.
+`Nodes` include both the `Applicative Node` and the proximity-based components, often referred to as `Proximity Nodes` or `PDP Nodes` in the `ZTAuth*` Architecture, designed to handle authorization requests locally with minimal latency.
 
 It is crucial to establish a robust federation mechanism that securely identifies and interconnects the `Central Server`, all `Nodes`, and their associated `ZTApplications`.
 This ensures secure communication across the system while adhering to Zero Trust principles, guaranteeing compliance and integrity at every level.
 
 ### 3.2 Requirements for Secure Pairing
 
-The `Central Server` and each `Node` must generate a pair of cryptographic keys (public and private) to be used specifically for `Pairing` operations. These keys are not only required for initiating communication with the `Central Server` but also for secure interactions between `Nodes`, as described earlier.
+The `Central Server` and each `Node` must generate a pair of cryptographic keys (public and private) to be used specifically for `Pairing` and `Communication` operations. These keys are not only required for initiating communication with the `Central Server` but also for secure interactions between `Nodes`, as described earlier.
 
 These keys are essential for secure communication and authentication within the system:
 
@@ -435,27 +435,55 @@ Both the `Central Server` and each `Node` must provide APIs or other mechanisms 
 
 ### 3.3 Node Registration Process
 
-The `Node` registration process ensures secure pairing with the `Central Server` before the `Node` becomes fully operational or reachable. This process is initiated by a trusted operator and follows these steps:
+The `Node` registration process establishes a secure pairing with the `Central Server` before the `Node` becomes operational or accessible. This process is initiated by a trusted operator and includes the following steps:
 
-1. A trusted operator **requests** the `Central Server` to register a new `node` in the system by providing the necessary details, such as the `node` name, description, and the **public key**, which is mandatory. This should be done in a secure environment, such as an administration console, a secure API endpoint, or any other secure procedure, to protect sensitive information during transmission.
-2. The `Central Server` generates a unique identifier for the `node` and associates it with the provided details.
-3. The `Node` **contacts** the `Central Server` to **confirm** the registration and **retrieve** the unique identifier certificate and the API key. This request is **signed** with the private key of the `Node` to ensure the authenticity of the request and to prevent tampering.
-4. The `Central Server` **verifies** the signature of the request.
-5. **Before responding**, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
-6. The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
+1. **Request Registration**:  
+   A trusted operator requests the `Central Server` to register a new `Node` by providing necessary details such as the `Node` name and the **public key**. This step must occur in a secure environment (e.g., administration console, secure API endpoint) to protect sensitive information during transmission.
+   
+2. **Generate Unique Identifier**:  
+   The `Central Server` assigns a unique identifier to the `Node` and associates it with the provided details.
+
+3. **Node Confirmation**:  
+   The `Node` contacts the `Central Server` to confirm its registration and retrieve the unique identifier certificate and API key. The `Node` signs this request with its private key to ensure authenticity and prevent tampering.
+
+4. **Verification**:  
+   The `Central Server` verifies the signature of the request to ensure it originates from the `Node` holding the private key.
+
+5. **Secure API Key Storage**:  
+   Before responding, the `Central Server` securely stores the API key to prevent unauthorized access.
+
+6. **Send Credentials**:  
+   The `Central Server` sends the unique identifier certificate and API key to the `Node`. This response is encrypted using the `Node`'s public key to ensure confidentiality and data integrity during transmission.
 
 ### 3.4 Node Advertisement Protocol
 
-The `Node` advertisement process ensures that a `Node` is recognized and verified by the `Central Server` before it becomes fully operational or reachable. This process is initiated by the `Node` and follows these steps:
+The `Node` advertisement process allows a `Node` to be recognized and verified by the `Central Server` after it becomes operational or accessible. This process is initiated by the `Node` and includes the following steps:
 
-1. The `Node` **advertises** its presence to the `Central Server` by providing necessary details such as the `node` name, description, and the **public key**, which is mandatory. This should happen in a secure environment, such as a secure API endpoint, to protect sensitive information during transmission.  
-2. The `Central Server` **receives** the advertisement request and generates a unique identifier for the `node`, associating it with the provided details.
-3. The `Central Server` then performs a verification step, which can be manual or automatic, potentially using a third-party provider to **validate** the authenticity and legitimacy of the `Node`. This ensures the `Node` is trustworthy and can be safely integrated into the system.
-4. Once the verification is successful, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
-5. The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
-6. The `Node` can now use the API key and the unique identifier to become fully operational and interact securely with the `Central Server` and other nodes in the network.
+1. **Advertise Presence**:  
+   The `Node` advertises itself to the `Central Server` by providing necessary details, such as the `Node` name and the **public key**. This step must occur in a secure environment (e.g., secure API endpoint) to protect sensitive information during transmission.
 
-### 3.5 Identifier Certificate Specification
+2. **Receive and Assign Identifier**:  
+   The `Central Server` receives the advertisement request and assigns a unique identifier to the `Node`, associating it with the provided details.
+
+3. **Verification**:  
+   The `Central Server` performs a verification step (manual or automatic) to validate the authenticity and legitimacy of the `Node`. This step may include using a third-party provider to ensure the `Node` can be trusted.
+
+4. **Secure API Key Storage**:  
+   Upon successful verification, the `Central Server` securely stores the API key to prevent unauthorized access.
+
+5. **Send Credentials**:  
+   The `Central Server` sends the unique identifier certificate and API key to the `Node`. This response is encrypted using the `Node`'s public key, ensuring confidentiality and data integrity during transmission.
+
+### 3.5 Technical and Security Considerations
+
+Implementing the `Node Registration` and `Node Advertisement` processes, several technical and security considerations must be addressed to ensure the robustness and reliability of the system:
+
+- **Encryption**: All sensitive data, such as the API key and unique identifier, must be encrypted during transmission using the `Node's` public key to prevent eavesdropping.
+- **Authentication**: The use of cryptographic keys ensures that only legitimate `Nodes` can pair with the `Central Server`.
+- **Revocation Handling**: Both processes must allow for revocation of credentials in case of a security breach, ensuring compromised `Nodes` are immediately excluded from the system.
+- **Third-Party Verification**: Incorporating third-party validation strengthens the trustworthiness of the system, particularly for untrusted `Nodes`.
+
+### 3.6 Identifier Certificate Specification
 
 The `Identifier Certificate` is a unique certificate generated by the `Central Server` for each `Node`. This certificate contains important details about the `Node` and its relationship with the `Central Server`. Each field in the certificate has a specific purpose, explained below:
 
@@ -493,15 +521,33 @@ Here is an example of the `Identifier Certificate` structure:
 
 > **NOTE**: The `Identifier Certificate` structure is provided as an example and can be customized based on the specific requirements of the system, likewise node_public_key and certificate_signature are placeholders for the actual public key and signature.
 
-### 3.5 Procedure for Revocation of Pairing
+### 3.7 Procedure for Revocation of Pairing
 
-In case of a security incident or a change in the `Node` status, the `Central Server` can revoke the pairing with a `Node`. This ensures that the `Node` is no longer recognized or trusted by the `Central Server` and cannot interact with the system.
+To maintain security, the `Central Server` must have a solid mechanism for revoking the pairing of `Nodes` in the event of a security breach or a change in the `Node's` status. This ensures untrusted `Nodes` cannot interact with the system.
 
-The **API Key** is used only for communication with the `Central Server`, not for `Node` to `Node` communication. Therefore, deleting the **API Key** is sufficient to block the `Node` from the system.
+Revocation Scenarios:
 
-Regarding the `Identifier Certificate`, the `Central Server` can revoke it by updating the `Node` status in the system, marking it as revoked. This ensures that the `Node` is no longer considered trustworthy and cannot perform any operations. The revoked status should be tracked in a **revoked nodes list**. Each `Node` should regularly check this list to verify the trustworthiness of other `Nodes` it communicates with.
+1. **Revocation of a Node**:
+   - If a specific `Node` is compromised, the `Central Server` can revoke its pairing.
+   - The **API Key**, used only for communication with the `Central Server`, should be deleted. This action immediately blocks the `Node` from interacting with the `Central Server`.
+   - The `Identifier Certificate` of the `Node` must be marked as revoked in the system. The revoked status should be logged in a **revoked nodes list**.  
+   - Other `Nodes` must check this list to avoid communication with the compromised `Node`.
 
-## 4 Trusted Elevation
+2. **Revocation of All Nodes** (in case of a Central Server compromise):
+   - If the `Central Server` is compromised, all `Nodes` must be treated as untrusted until the pairing is re-established.
+   - A new set of cryptographic keys (public and private) must be generated for the `Central Server`.
+   - All `API Keys` and `Identifier Certificates` issued by the compromised server must be invalidated.
+   - The `Central Server` must issue fresh `API Keys` and `Identifier Certificates` to each `Node` after verifying their authenticity.
+
+Best Practices for Revocation:
+
+- **Real-Time Updates**: The `Central Server` should maintain and distribute an updated **revoked nodes list** to all `Nodes` in real-time to ensure seamless trust verification.
+- **Node Verification**: Each `Node` must periodically check the **revoked nodes list** before establishing trust with other `Nodes` or the `Central Server`.
+- **Zero Trust Compliance**: The system should adhere to Zero Trust principles, ensuring that no component is implicitly trusted, even after revocation procedures.
+
+This approach ensures a robust and secure revocation process, whether targeting individual `Nodes` or addressing a system-wide compromise.
+
+## 4 Trusted Elevation and Trusted Delegation
 
 The `Trusted Elevation` process is a critical component of the `Identity Actor Model`. It ensures that a `Node` can securely elevate its privileges to a specific `Identity Actor` and act on behalf of a `Principal` within the defined security boundaries of an `Authorization Context`.
 
