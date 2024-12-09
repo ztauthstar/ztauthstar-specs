@@ -783,10 +783,52 @@ To ensure Zero Trust compliance, both the delegated entity and the delegator mus
 
 ## 5 Trusted Operation Chaining
 
-This section covers the process of securely chaining multiple `nodes`, ensuring that each `node` elevates to the appropriate `Identity Actor` and performs actions on behalf of the principal.
-This process ensures the safe chaining of multiple `nodes`, even in the absence of communication with the `Central Server`.
+Trusted Operation Chaining refers to the secure process of linking multiple `Nodes`, ensuring that each `Node` elevates to the appropriate `Identity Actor` and performs actions on behalf of the `Principal` across different boundaries. This mechanism allows for safe and secure chaining of operations, even in scenarios where communication with the `Central Server` is unavailable.
 
-In practice, this works by forwarding requests from one `node` to another. Each `node` presents its certificate as proof that it received a request from a client. The certificate is signed with the private key of the `node`, and this signature can be verified by the next `node` in the chain, ensuring the authenticity and integrity of the request.
+The process operates as follows:
+
+1. **Request Forwarding**: Requests are forwarded sequentially from one `Node` to another in the chain.
+2. **Certificate Presentation**: Each `Node` presents its certificate as proof that it has received a request from a client or another `Node`.
+3. **Signature Verification**: The certificate is signed with the private key of the `Node`, and the next `Node` in the chain verifies this signature using the corresponding public key.
+4. **Request Validation**: Once verified, the `Node` processes the request, ensuring its authenticity and integrity, before forwarding it to the next `Node` or executing the required action.
+
+Key benefits:
+
+- **Cross-Boundary Operations**: Trusted Operation Chaining enables secure collaboration across multiple boundaries without requiring constant communication with the `Central Server`.
+- **Integrity and Authenticity**: By leveraging cryptographic signatures, the authenticity and integrity of each request are ensured throughout the chain.
+- **Resilience**: The process is resilient to Central Server outages, allowing operations to proceed securely in distributed or federated environments.
+
+By implementing Trusted Operation Chaining, the system maintains a Zero Trust approach, ensuring that no `Node` is implicitly trusted and that all operations adhere to strict verification and security principles.
+
+### 5.1 Initiating the Operation Chaining Process
+
+A client or a `Node` initiating an operation must first retrieve the identifier certificate of the next `Node` in the chain. This certificate is essential for verifying the authenticity of the `Node` and ensuring it is authorized to perform the requested operation.
+
+If needed, the initiator may also request a `Trusted Elevation` or `Trusted Delegation` certificate from the next `Node`. This certificate, signed with the next `Node's` private key, can be used in combination with the public key from the identifier certificate to validate the trustworthiness of the `Node`.
+
+Additionally, the initiator should verify with the `Central Server` that the next `Node` is not listed in a banned or revoked list. This ensures that the `Node` is compliant with the system’s security policies and prevents interactions with untrusted or compromised entities.
+
+If the initiator is a `Node`, the request must also be signed with its private key. This signature ensures the authenticity of the request, allowing the next `Node` in the chain or the `Central Server` to verify that the request originated from a trusted and authorized source.
+
+### 5.2 Handling and Verifying Chained Requests
+
+The handler processes the request and performs the necessary actions. However, if the request is signed, it must verify the signature using the public key of the sender to ensure authenticity and integrity. If the request is not signed, the handler must reject it or request that it be signed by the sender's private key to ensure compliance with security requirements.
+
+### 5.3 Completing and Forwarding the Chain
+
+The forwarding process is similar to the initiation process; however, the forwarding `Node` may include proof of handling the request before passing it to the next `Node` in the chain.
+This proof, signed with the forwarding `Node's` private key, ensures that the request was processed and handled correctly.
+
+This approach is particularly useful in scenarios where two organizations are federated, and a `Node` needs to communicate with a `Node` in another organization.
+For example, in a cross-organization scenario, a Worker `Node` might need to call an API hosted by another organization to complete its task.
+
+By providing signed proof of the request's handling, the system ensures:
+
+1. **Trustworthiness**: The request originates from a trusted source.
+2. **Validity**: The request is authentic and valid, adhering to predefined policies and protocols.
+3. **Cross-Boundary Security**: The process allows secure communication and operation across organizational boundaries, overcoming the limitations of traditional systems in such scenarios.
+
+This mechanism is especially useful for maintaining security and trust in distributed systems involving multiple organizations or complex workflows.
 
 ## 6 Trusted Federation
 
