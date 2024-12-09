@@ -43,19 +43,47 @@ For further details, refer to `https://github.com/ztauthstar/ztauthstar-publicat
 
 The `Identity Actor Model` is versatile and applies to a wide range of domains, including, but not limited to:
 
-- **Cloud Computing**: Secure and precise access control for cloud resources and services.
-- **Microservices**: Enforcing secure interactions while maintaining isolation.
-- **API Management**: Providing controlled and auditable API access.
-- **IoT and Edge Computing**: Managing secure device-to-cloud and edge interactions.
-- **Multi-Tenant Systems**: Ensuring resource segregation and tenant isolation.
-- **Distributed Systems**: Securing operations across distributed components.
-- **Federated Systems**: Enabling safe collaboration between independent entities.
-- **Blockchain/DLT**: Supporting secure `node`, smart contract, and app interactions.
-- **Data Privacy**: Handling sensitive data securely and meeting compliance.
-- **DevOps/CI/CD**: Automating secure deployments and operations.
-- **AI/ML**: Managing secure access to models and datasets.
-- **Digital Transformation**: Scaling secure operations in modern IT.
-- **Digital Wallets**: Ensuring secure management and transactions for wallets in public and private sectors.
+- **Cloud Computing**:  
+  Deliver a robust Identity Access Management (IAM) layer to effectively manage cloud resources and services. By enforcing adaptive and context-aware policies, ensure secure and precise access control for virtual machines, storage, serverless applications, etc. Leverage a Zero Trust framework to validate every request, enhance compliance, and mitigate risks in dynamic cloud environments.
+
+- **Microservices**:  
+  Enforce secure interactions between microservices while maintaining strict isolation and scalability. By leveraging policy-driven mechanisms, ensure that each service communicates only with authorized components, minimizing vulnerabilities in complex architectures.
+
+- **API Management**:  
+  Provide controlled and auditable access to APIs by implementing fine-grained policies. Track and monitor usage, detect anomalies, and ensure APIs remain secure gateways for critical business operations.
+
+- **IoT and Edge Computing**:  
+  Manage secure interactions between devices, cloud, and edge infrastructure. Enforce role-based and context-aware policies that validate device identity, ensure data integrity, and adapt to dynamic environments while protecting sensitive edge computing processes.
+
+- **Multi-Tenant Systems**:  
+  Guarantee resource segregation and tenant isolation in multi-tenant environments. Enforce strict access controls to ensure that data and resources are securely partitioned, safeguarding tenant confidentiality and maintaining operational integrity.
+
+- **Distributed Systems**:  
+  Secure operations across distributed components by applying consistent and decentralized policies. Protect data flows, authenticate participants, and ensure the integrity of operations in diverse and interconnected systems.
+
+- **Federated Systems**:  
+  Enable safe collaboration between independent entities by ensuring trust boundaries are maintained. Enforce policy-based governance for federated identities, data sharing, and resource access across organizations.
+
+- **Blockchain/DLT**:  
+  Support secure interactions with `nodes`, smart contracts, and decentralized applications. Enforce policy-driven access to ensure that transactions, operations, and data interactions adhere to compliance and security standards.
+
+- **Data Privacy**:  
+  Handle sensitive data securely while meeting regulatory and compliance requirements. Apply context-aware policies to control access, anonymize data where needed, and prevent unauthorized usage in data-intensive operations.
+
+- **DevOps/CI/CD**:  
+  Automate secure deployments and operations in DevOps pipelines. Integrate security checks, enforce role-based access controls, and ensure continuous delivery processes remain compliant and efficient.
+
+- **AI/ML**:  
+  Manage secure access to models, datasets, and inference services. Enforce strict policies to prevent data leakage, unauthorized usage, and ensure secure collaboration on AI/ML workflows.
+
+- **Digital Transformation**:  
+  Scale secure operations in modern IT environments by integrating Zero Trust principles. Address the challenges of evolving architectures, diverse platforms, and increasing compliance needs to ensure a secure and adaptable foundation for innovation.
+
+- **Digital Wallets**:  
+  Ensure secure management and transactions for digital wallets in both public and private sectors. Enforce encryption, authentication, and role-based policies to protect wallet interactions, ensuring secure financial and data operations.
+
+- **Zero Trust Printing**:  
+  Enable the secure transmission of documents using a Zero Trust Format framework. Documents are encrypted during transfer and can only be decrypted and printed if the identity and its associated authorization context permit it. Conditions such as user identity, role, time, and the physical location of the printer are verified before granting access. This approach ensures that sensitive information remains protected, aligns with organizational policies, and prevents unauthorized usage.
 
 We can summarize as following:
 
