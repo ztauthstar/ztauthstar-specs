@@ -407,68 +407,87 @@ By following these steps and adhering to these guidelines, the elevation process
 
 ## 3. Pairing of the Central Server and Nodes
 
-The `Identity Actor Model` requires a secure and reliable mechanism for `nodes` to pair with the `Central Server`. This process is essential for the `Central Server` to manage the `nodes` and ensure secure communication between them.
+The `Identity Actor Model` requires a secure and reliable mechanism for `Nodes` to pair with the `Central Server`.
+This process is essential not only for the `Central Server` to manage the `nodes` but also to ensure secure communication between the `Central Server` and the `nodes`, as well as among the `nodes` themselves.
 
 ### 3.1 The Central Server and Nodes
 
--- to be completed --
+The `Central Server` serves as the core component that manages all `ZTApplications` within the `ZTAuth*` Architecture. Typically, a `Node` is linked to a single `ZTApplication`.
+However, there are no strict limitations, and a `Node` can be linked with multiple `ZTApplications` if necessary.
+
+Nodes include both the `Applicative Node` and the proximity-based components, often referred to as `Proximity Nodes` or `PDP Nodes` in the `ZTAuth*` Architecture, designed to handle authorization requests locally with minimal latency.
+
+It is crucial to establish a robust federation mechanism that securely identifies and interconnects the `Central Server`, all `Nodes`, and their associated `ZTApplications`.
+This ensures secure communication across the system while adhering to Zero Trust principles, guaranteeing compliance and integrity at every level.
 
 ### 3.2 Requirements for Secure Pairing
 
-The `Central Server` and each `Node` must generate a pair of cryptographic keys (public and private) to be dedicated just for the `Pairing` operations.
+The `Central Server` and each `Node` must generate a pair of cryptographic keys (public and private) to be used specifically for `Pairing` operations. These keys are not only required for initiating communication with the `Central Server` but also for secure interactions between `Nodes`, as described earlier.
 
-These keys are essential for secure communication and authentication within the system. The **public key** will be used for encryption, while the **private key** will be used for decryption and signing operations, ensuring the integrity and confidentiality of the messages exchanged between the `Central Server` and the `Nodes`.
+These keys are essential for secure communication and authentication within the system:
+
+- The **public key** will be used for encryption.
+- The **private key** will be used for decryption and signing operations, ensuring the integrity and confidentiality of the messages exchanged between the `Central Server` and the `Nodes`, as well as between the `Nodes` themselves.
+
+![ZTAuth* Central Server and Nodes](./images/ztauth-central-server-nodes.png)
+
+Both the `Central Server` and each `Node` must provide APIs or other mechanisms (e.g., secure endpoints or dedicated protocols) to allow trusted parties to retrieve their **public keys** and **identification certificates**. These mechanisms are critical for establishing a robust trust network, enabling secure and verifiable communication between all components in the system, and adhering to the Zero Trust principles.
 
 ### 3.3 Node Registration Process
 
 The `Node` registration process ensures secure pairing with the `Central Server` before the `Node` becomes fully operational or reachable. This process is initiated by a trusted operator and follows these steps:
 
-- A trusted operator **requests** the `Central Server` to register a new `node` in the system by providing the necessary details, such as the `node` name, description, and the **public key**, which is mandatory. This should be done in a secure environment, such as an administration console, a secure API endpoint, or any other secure procedure, to protect sensitive information during transmission.
-- The `Central Server` generates a unique identifier for the `node` and associates it with the provided details.
-- The `Node` **contacts** the `Central Server` to **confirm** the registration and **retrieve** the unique identifier certificate and the API key. This request is **signed** with the private key of the `Node` to ensure the authenticity of the request and to prevent tampering.
-- The `Central Server` **verifies** the signature of the request.
-- **Before responding**, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
-- The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
+1. A trusted operator **requests** the `Central Server` to register a new `node` in the system by providing the necessary details, such as the `node` name, description, and the **public key**, which is mandatory. This should be done in a secure environment, such as an administration console, a secure API endpoint, or any other secure procedure, to protect sensitive information during transmission.
+2. The `Central Server` generates a unique identifier for the `node` and associates it with the provided details.
+3. The `Node` **contacts** the `Central Server` to **confirm** the registration and **retrieve** the unique identifier certificate and the API key. This request is **signed** with the private key of the `Node` to ensure the authenticity of the request and to prevent tampering.
+4. The `Central Server` **verifies** the signature of the request.
+5. **Before responding**, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
+6. The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
 
 ### 3.4 Node Advertisement Protocol
 
 The `Node` advertisement process ensures that a `Node` is recognized and verified by the `Central Server` before it becomes fully operational or reachable. This process is initiated by the `Node` and follows these steps:
 
-- The `Node` **advertises** its presence to the `Central Server` by providing necessary details such as the `node` name, description, and the **public key**, which is mandatory. This should happen in a secure environment, such as a secure API endpoint, to protect sensitive information during transmission.  
-- The `Central Server` **receives** the advertisement request and generates a unique identifier for the `node`, associating it with the provided details.
-- The `Central Server` then performs a verification step, which can be manual or automatic, potentially using a third-party provider to **validate** the authenticity and legitimacy of the `Node`. This ensures the `Node` is trustworthy and can be safely integrated into the system.
-- Once the verification is successful, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
-- The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
-- The `Node` can now use the API key and the unique identifier to become fully operational and interact securely with the `Central Server` and other nodes in the network.
+1. The `Node` **advertises** its presence to the `Central Server` by providing necessary details such as the `node` name, description, and the **public key**, which is mandatory. This should happen in a secure environment, such as a secure API endpoint, to protect sensitive information during transmission.  
+2. The `Central Server` **receives** the advertisement request and generates a unique identifier for the `node`, associating it with the provided details.
+3. The `Central Server` then performs a verification step, which can be manual or automatic, potentially using a third-party provider to **validate** the authenticity and legitimacy of the `Node`. This ensures the `Node` is trustworthy and can be safely integrated into the system.
+4. Once the verification is successful, the `Central Server` **saves** the API key securely, ensuring that it is stored in a way that prevents unauthorized access.
+5. The `Central Server` **sends** the unique identifier certificate along with the generated API key to the `Node`. This response is **encrypted** with the `Node`'s public key to ensure confidentiality and protect the integrity of the sensitive data in transit.
+6. The `Node` can now use the API key and the unique identifier to become fully operational and interact securely with the `Central Server` and other nodes in the network.
 
 ### 3.5 Identifier Certificate Specification
 
-The `Identifier Certificate` is a unique certificate generated by the `Central Server` for each `Node`. This certificate contains the following information:
+The `Identifier Certificate` is a unique certificate generated by the `Central Server` for each `Node`. This certificate contains important details about the `Node` and its relationship with the `Central Server`. Each field in the certificate has a specific purpose, explained below:
 
-- **Node Identifier**: A unique identifier assigned to the `Node` by the `Central Server`.
-- **Node Name**: The name of the `Node` provided during registration or advertisement.
-- **Node Description**: A brief description of the `Node` provided during registration or advertisement.
-- **Public Key**: The public key of the `Node` used for encryption and verification operations.
-- **Creation Timestamp**: The timestamp indicating when the certificate was created.
-- **Expiration Timestamp**: The timestamp indicating when the certificate will expire.
-- **Signature**: A digital signature generated by the `Central Server` to ensure the authenticity and integrity of the certificate.
+- **certificate_version**: The version of the certificate format (e.g., "1.0"), used to ensure compatibility across the system.
+- **certificate_type**: The type of the certificate (e.g., "node_identifier"), indicating its purpose within the system.
+- **certificate_id**: A unique identifier for the certificate, used to distinguish it from others in the system.
+- **certificate_creation_timestamp**: The date and time when the certificate was created, providing traceability and helping track its lifecycle.
+- **certificate_expiration_timestamp**: The date and time when the certificate becomes invalid, ensuring that certificates are periodically refreshed for security.
+- **certificate_signature**: A digital signature generated by the `Central Server`, verifying the authenticity and integrity of the certificate.
+- **certificate_issuer_id**: The unique identifier of the `Central Server` that issued the certificate, ensuring clear attribution.
+- **certificate_issuer_type**: Specifies the type of entity that issued the certificate (e.g., "central_server"), providing context for trust relationships.
+- **node_identifier**: A unique ID assigned to the `Node` by the `Central Server`, used for identifying the `Node` within the system.
+- **node_name**: The name of the `Node`, provided during its registration or advertisement process, making it easier to reference.
+- **node_public_key**: The public key of the `Node`, used for encryption and verification of communications.
 
-> Essentially, the `Central Server` acts as the Certificate Authority (CA) for the `Node`, signing the certificate to guarantee its authenticity and integrity.
+> The `Central Server` functions as the Certificate Authority (CA) in this architecture, ensuring trust across the system by signing each certificate.
 
-Here an example of the `Identifier Certificate` structure:
+Here is an example of the `Identifier Certificate` structure:
 
 ```json
 {
     "certificate_version": "1.0",
     "certificate_type": "node_identifier",
     "certificate_id": "03933209-d244-490c-83df-ffad43f20c67",
+    "certificate_creation_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_expiration_timestamp": "2024-01-01T00:00:00Z",
+    "certificate_signature": "certificate_signature",
+    "certificate_issuer_id": "e341f50e-b3a5-45a2-9253-aa6f30a58bbe",
+    "certificate_issuer_type": "central_server",
     "node_identifier": "0bc91b6c-fa45-4f22-bc18-a148157f6e75",
     "node_name": "Node1",
-    "node_description": "Node dedicated for API operations",
-    "public_key": "node_public_key",
-    "creation_timestamp": "2024-01-01T00:00:00Z",
-    "expiration_timestamp": "2024-01-01T00:00:00Z",
-    "signature": "certificate_signature"
+    "node_public_key": "node_public_key"
 }
 ```
 
