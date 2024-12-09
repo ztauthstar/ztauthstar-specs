@@ -59,8 +59,8 @@ The `Identity Actor Model` is versatile and applies to a wide range of domains, 
 
 We can summarize as following:
 
-    The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `Node` is responsible for managing requests from a `Principal`.
-    The `Node` securely processes these requests within a clearly defined authorization context, acting as an `Actor` and performing actions strictly on behalf of the `Principal` while enforcing necessary security and operational boundaries.
+> The `Identity Actor Model` applies to any system—whether hardware, software, or a combination of both—where a `Node` is responsible for managing requests from a `Principal`.
+> The `Node` securely processes these requests within a clearly defined authorization context, acting as an `Actor` and performing actions strictly on behalf of the `Principal` while enforcing necessary security and operational boundaries.
 
 Below are two illustrative examples to help understand the concept. These are purely figurative and not exhaustive, meant only to provide practical context:
 
@@ -87,7 +87,7 @@ To explain the concepts in this document, consider an **accounting system** with
 - **John**: An `accountant` who manages all parts of the invoice process (view, create, update, delete, approve, reject).
 - **Bob**: An `apprentice` who can only view invoices and cannot perform other actions.
 
-As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to either **create or update new invoices**, but these invoices must remain pending until approved by another accountant.
+As Bob gains experience, John sometimes assigns him extra tasks. For example, when John is unavailable, Bob is allowed to either **create, update, delete new invoices**, but these changes on invoices must remain pending until approved by another accountant.
 
 This example demonstrates how responsibilities can be shared in a bounded way, with clear limits to ensure accountability and security.
 
@@ -131,7 +131,7 @@ Below is an example of a policy defined for the implementation scenario. A sampl
 
 ### 2.2 Definition of Actor Models
 
-The `Actor Model` represents a specific `Actor` within the system. Below, we define the `Actor Model` for the implementation scenario.
+The `Actor Model` represents a specific `Actor` within the system. Below, we define the `Actor Models` for the implementation scenario.
 
 There are two types of `Actors` in this context:
 
@@ -197,7 +197,7 @@ The `apprentice-actor` is a `Role-Based Actor` representing a delegated identity
 }
 ```
 
-The `john-actor` is a `Digital Twin Actor` representing a delegated identity that exactly mirrors John's permissions, allowing him to create, update, delete, approve, and reject invoices.
+The `john-actor` is a `Digital Twin Actor` representing a delegated identity that exactly mirrors John's permissions, allowing him to view, create, update, delete, approve, and reject invoices.
 
 ```json
 {
@@ -246,7 +246,7 @@ Using bounded `Authorization Contexts` ensures that only the permissions require
 
 ### 2.3 Definition of Authorization Models
 
-The `Authorization Model` maps policies to the corresponding `Actor Models`. Below is the definition of the `Authorization Model` for the implementation scenario.
+The `Authorization Model` maps policies to the corresponding `Actor Models`. Below is the definition of the `Authorization Models` for the implementation scenario.
 
 | Actor Model ID | Actor Model Type   | Actor Model Name           | Policies                                                                                      |
 |----------------|--------------------|----------------------------|-----------------------------------------------------------------------------------------------|
@@ -413,7 +413,7 @@ This process is essential not only for the `Central Server` to manage the `nodes
 ### 3.1 The Central Server and Nodes
 
 The `Central Server` serves as the core component that manages all `ZTApplications` within the `ZTAuth*` Architecture. Typically, a `Node` is linked to a single `ZTApplication`.
-However, there are no strict limitations, and a `Node` can be linked with multiple `ZTApplications` if necessary.
+However, there are no strict limitations, and a `Node` can be linked with multiple `ZTApplications` if necessary. The same applies to central servers, as `Nodes` can be linked to multiple `Central Servers`.
 
 `Nodes` include both the `Applicative Node` and the proximity-based components, often referred to as `Proximity Nodes` or `PDP Nodes` in the `ZTAuth*` Architecture, designed to handle authorization requests locally with minimal latency.
 
@@ -424,7 +424,7 @@ This ensures secure communication across the system while adhering to Zero Trust
 
 The `Central Server` and each `Node` must generate a pair of cryptographic keys (public and private) to be used specifically for `Pairing` and `Communication` operations. These keys are not only required for initiating communication with the `Central Server` but also for secure interactions between `Nodes`, as described earlier.
 
-These keys are essential for secure communication and authentication within the system:
+These keys are essential for secure communication and authentication and identification within the system:
 
 - The **public key** will be used for encryption.
 - The **private key** will be used for decryption and signing operations, ensuring the integrity and confidentiality of the messages exchanged between the `Central Server` and the `Nodes`, as well as between the `Nodes` themselves.
