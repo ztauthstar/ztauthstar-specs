@@ -852,15 +852,17 @@ To maintain the integrity of the federation, all `Central Servers` must implemen
 
 - **Revocation of Public Keys**: If a `Central Server` or a `Node` within its domain is compromised, its public key must be revoked
 
-## 6 Narrowing Down the Actor Model Scope in Response to Threats and Anomalies
+## 7 Narrowing Down the Actor Model Scope in Response to Threats and Anomalies
 
-Actor Models support mathematical operations such as union, intersection, sum, and difference. In the event of threats or anomalies, the **authoritative scope** of an Actor Model can be restricted by narrowing its permissions using the mathematical operators.
+Actor Models support mathematical operations such as **union (∪)**, **intersection (∩)**, **difference (\\)**, and **symmetric difference (Δ)**, derived from set theory. These operations are used to manipulate the scope and permissions of Actor Models based on predefined rules and detected risks.
+
+In the event of threats or anomalies, the **authoritative scope** of an Actor Model can be restricted by narrowing its permissions using these mathematical operators.
 
 When a threat or anomaly is detected, the Central Server, Nodes, or both exchange metadata describing the issue. Based on this information, a new Actor Model is created, containing policies classified as either safe or unsafe in relation to the detected risks.
 
-Each Node dynamically applies this new Actor Model using either the right operation, depending on the received metadata. This process allows the system to hide or exclude risky policies, ensuring that the Actor Model adapts to mitigate the threat or anomaly while maintaining operational integrity.
+Each Node dynamically applies this new Actor Model using the appropriate operations to exclude unsafe ones—depending on the received metadata. This process ensures that the Actor Model adapts to mitigate the threat or anomaly while maintaining operational integrity.
 
-## 7 Decentralized Actor Models
+## 8 Decentralized Actor Models
 
  `ZTAuth*` utilize a Git-like object storage system. This design enables each Node to independently create new commits representing changes or additions to the Auth* models. These commits can then be synchronized back to the Central Server, ensuring a consistent and unified state across the system.
 
