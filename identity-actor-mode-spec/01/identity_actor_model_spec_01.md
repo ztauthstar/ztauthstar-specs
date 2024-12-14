@@ -862,7 +862,7 @@ When a threat or anomaly is detected, the Central Server, Nodes, or both exchang
 
 Each Node dynamically applies this new Actor Model using the appropriate operations to exclude unsafe ones—depending on the received metadata. This process ensures that the Actor Model adapts to mitigate the threat or anomaly while maintaining operational integrity.
 
-## 8 Decentralized Actor Models
+## 8 Decentralized Auth* Models
 
  `ZTAuth*` utilize a Git-like object storage system. This design enables each Node to independently create new commits representing changes or additions to the Auth* models. These commits can then be synchronized back to the Central Server, ensuring a consistent and unified state across the system.
 
