@@ -856,11 +856,64 @@ To maintain the integrity of the federation, all `Central Servers` must implemen
 
 Actor Models support mathematical operations such as **union (∪)**, **intersection (∩)**, **difference (\\)**, and **symmetric difference (Δ)**, derived from set theory. These operations are used to manipulate the scope and permissions of Actor Models based on predefined rules and detected risks.
 
-In the event of threats or anomalies, the **authoritative scope** of an Actor Model can be restricted by narrowing its permissions using these mathematical operators.
+In the event of threats or anomalies, the **authorization context** of an Actor Model can be restricted by narrowing its permissions using these mathematical operators.
 
 When a threat or anomaly is detected, the Central Server, Nodes, or both exchange metadata describing the issue. Based on this information, a new Actor Model is created, containing policies classified as either safe or unsafe in relation to the detected risks.
 
 Each Node dynamically applies this new Actor Model using the appropriate operations to exclude unsafe ones—depending on the received metadata. This process ensures that the Actor Model adapts to mitigate the threat or anomaly while maintaining operational integrity.
+
+### Example: Diff Between HighRiskActorModel and ThreatActorModel
+
+Consider the following example where two Actor Models are defined. The `diff` operation is used to identify the differences in their scope and permissions. The goal is to isolate unsafe permissions due to a detected threat.
+
+#### BusinessActorModel
+
+This actor model includes an expanded set of permissions required to perform a specific business operation.
+
+```json
+{
+    "actor_model_id": 1,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-authoring-actor",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["create-invoice", "update-invoice", "delete-invoice", "approve-invoice"]
+}
+```
+
+#### ThreatActorModel
+
+This actor model includes a set of permissions that are considered high risk due to a detected anomaly.
+
+```json
+{
+    "actor_model_id": 1,
+    "actor_model_type": "role-based-actor",
+    "actor_model_name": "accountant-authoring-actor-threat",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["create-invoice", "delete-invoice"]
+}
+```
+
+#### Diff Operation: Difference (\\)
+
+The `difference (\\)` operation identifies the policies in **BusinessActorModel** that are not present in **ThreatActorModel**. In this case, the `create-invoice` and `delete-invoice` policies are excluded due to a detected risk (e.g., unauthorized access or anomaly).
+
+```json
+{
+    "actor_model_id": 2,
+    "actor_model_type": "role-based-actor-restricted",
+    "actor_model_name": "accountant-authoring-actor-restricted",
+    "actor_identity": "*",
+    "assumed_by": ["itself", "trusted"],
+    "policies": ["update-invoice", "approve-invoice"]
+}
+```
+
+This operation ensures that the Actor Model narrows down to only the necessary actions, mitigating risks and ensuring that permissions are limited to those required under the current threat conditions.
+
+This example demonstrates how dynamically narrowing the Actor Model scope helps mitigate threats and ensures compliance with security policies while maintaining operational integrity across various environments.
 
 ## 8 Decentralized Auth* Models
 
