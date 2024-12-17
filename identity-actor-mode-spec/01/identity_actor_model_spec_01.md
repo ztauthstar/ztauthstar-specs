@@ -35,7 +35,42 @@ These features make the `Identity Actor Model` a secure, efficient, scalable, an
 
 This approach ensures that `ZTAuth*` remains focused and dedicated to authorization within a **Zero Trust** framework, while leveraging the capabilities of Identity Providers to handle authentication and identity management.
 
-### 1.4 Integration with Zero Trust Architecture
+### 1.4 ZTAuth* Overview
+
+`ZTAuth*` is a comprehensive approach to authorization and authentication designed to align with Zero Trust principles, ensuring that security remains intact even in dynamic and decentralized environments. At its core, `ZTAuth*` operates under the assumption that a breach is always possible, prompting a rigorous process of continuous verification for every identity and every transaction. The fundamental tenets of Zero Trust—never trust, always verify; least privilege access; and assume breach—are applied in all layers, from devices and networks to applications and users.
+
+`ZTAuth*` focuses not only on authentication (AuthN) and authorization (AuthZ) but also integrates trusted delegation and policy enforcement into its framework. This ensures that any entity (user, device, or application) can operate securely and within a well-defined scope, without implicitly trusting any of the components involved. Every action is logged, and policies are applied in such a way that they are **immutable**, **versionable**, and **transferable**. These properties ensure that policies are tamper-proof, auditable, and consistent across time, providing both operational integrity and security, especially in regulated environments or complex workflows.
+
+The architecture of `ZTAuth*` uses `Auth*` models, where `Auth*` combines both **authentication (AuthN)** and **authorization (AuthZ)**, as well as related concepts such as delegation and policy enforcement.
+
+Division of AuthN and AuthZ Models in Auth*:
+
+1. **AuthN Model (Authentication Model)**:
+   The **AuthN model** is responsible for handling authentication-related metadata. It contains information necessary for identifying and verifying entities, such as users, devices, or services. This model includes all the data required for **authentication** processes, ensuring that only trusted identities can interact with the system. The **AuthN model** guarantees that the authentication data is **immutable**, **versionable**, and **transferable** to ensure consistency and compliance across various environments, including decentralized or distributed systems.
+
+2. **AuthZ Model (Authorization Model)**:
+   The **AuthZ model** focuses on **authorization** and includes metadata that defines the permissions, roles, and policies related to an entity's access to resources. This model integrates key aspects like **policy definitions**, **trust elevation**, and **trust delegation**. These elements are critical for ensuring that entities can only perform actions within their assigned scope, under specific conditions, and in accordance with the security policies defined by the system. Similar to the **AuthN model**, the **AuthZ model** is also **immutable**, **versionable**, and **transferable**, ensuring that policies and permissions remain consistent and auditable across different environments.
+
+Together, the **AuthN** and **AuthZ** models form the foundation of the `Auth*` system. The `Auth*` model acts as a comprehensive framework for both **authentication** and **authorization**, ensuring that access is tightly controlled and that security is consistently applied, even across distributed or disconnected environments.
+
+The **star** in `Auth*` represents the flexibility and extensibility of the framework, as it encompasses not only **AuthN** and **AuthZ**, but also integrates related concepts such as **trusted delegation**, **elevation of trust**, and other policy enforcement mechanisms. This ensures that the system remains adaptable to evolving security needs and operational environments.
+
+One of the key features of `ZTAuth*` is its ability to operate effectively in environments with intermittent connectivity. This is especially crucial in modern architectures such as **Cloud**, **IoT**, and **Edge Nodes**, where reliable, always-on network connections are often not the norm but rather the exception.
+
+To address these challenges, `ZTAuth*` incorporates **proximity nodes** that function autonomously even in disconnected or low-connectivity environments. These nodes replicate the necessary `Auth*` models and operate securely, applying policies and handling authentication and authorization requests locally. The **proximity nodes** ensure that security checks and operations can still be carried out without waiting for constant connectivity to a central server.
+
+In these environments, **eventual consistency** is applied. This means that while the proximity nodes may work independently in the short term, once connectivity is restored, they synchronize with the central server to ensure that all data, policies, and authorization contexts are consistent across the system. This approach guarantees that, even in environments with fluctuating connectivity, `Auth*` models remain secure, synchronized, and compliant with the established policies, ensuring that no security gaps occur due to temporary isolation.
+
+This capability is essential for applications running in IoT ecosystems, edge devices, or cloud-based microservices, where network issues such as latency, low bandwidth, or total disconnection are common. `ZTAuth*` handles these challenges seamlessly by ensuring that authorization and authentication models are maintained, synchronized, and consistent across all nodes, regardless of connectivity conditions.
+
+`ZTAuth*` provides a scalable and secure framework for managing authentication, authorization, and delegation across a wide range of environments, from cloud systems to IoT and edge computing. With its **immutable**, **versionable**, and **transferable** `Auth*` models, as well as its ability to operate in decentralized and low-connectivity environments using **proximity nodes** and **eventual consistency**, `ZTAuth*` ensures that security is never compromised, even in the most dynamic and distributed architectures. By leveraging the principles of Zero Trust, `ZTAuth*` enables organizations to maintain strict access controls and security policies across complex, multi-cloud, and edge computing environments.
+
+Finally, let’s use a comparison:
+
+- **ZTNA (Zero Trust Network Access)**: Ensures secure, identity-based access to networks or applications by applying least privilege at the network boundary.
+- **`ZTAuth*` (Zero Trust Auth*)**: Ensures secure, identity-based execution of actions on resources by enforcing least privilege at the application boundary. Built for eventual consistency, the security model is incrementally synchronized across applicative nodes in an immutable, versioned manner.
+
+### 1.5 Integration with Zero Trust Architecture
 
 The `ZTAuth*` Architecture is outlined below.
 
@@ -43,7 +78,7 @@ For further details, refer to `https://github.com/ztauthstar/ztauthstar-publicat
 
 ![ZTAuth* Architecture](./images/ztauth-architecture.png)
 
-### 1.5 Applicable Use Domains
+### 1.6 Applicable Use Domains
 
 The `Identity Actor Model` is versatile and applies to a wide range of domains, including, but not limited to:
 
@@ -112,7 +147,7 @@ Important Notes:
 - **`Node` Chaining**: `Nodes` can be concatenated without any limit to the number of connections. Each `node` in the chain must independently elevate to the appropriate `Actor Model` and securely perform actions on behalf of the principal.  
    For example, a possible chain could be: `API -> Worker -> API -> API -> Worker -> Robot -> API -> Worker -> API`.
 
-### 1.6 Reference Implementation Scenario
+### 1.7 Reference Implementation Scenario
 
 To explain the concepts in this document, consider an **accounting system** with two business roles:
 
